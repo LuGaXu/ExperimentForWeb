@@ -1,0 +1,53 @@
+@charset "utf-8";
+/* CSS Document */
+body{
+	/*text-align:center;*/
+	//background-color:#651fff;
+	background: -webkit-gradient(linear, 0 0, 0 100%, from(#bbdefb), to(#2196f3)); /** Chrome Safari **/
+background: -moz-linear-gradient(top, #eee, #aaa); /** FireFox **/
+background: -o-linear-gradient(top, #eee, #aaa);  /** Opear **/
+background: -ms-linear-gradient(#eeeeee 0%,#aaaaaa 100%);  /** IE9 IE10 **/
+filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#eeeeee',endColorstr='#aaaaaa',grandientType=1); /** IE7 **/
+-ms-filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#eeeeee',endColorstr='#aaaaaa',grandientType=1); /** IE8 **/
+	}
+h1{
+	margin-top:150px;
+	margin-left:20%;
+	font-family:"Arial Black", Gadget, sans-serif;
+	font-size:3em;
+	color:#ffeb3d;
+	float:left;
+}
+#frame{
+	height:360px;
+	width:30%;
+	//border:2px dashed none;
+	margin-left:60%;
+	margin-top:80px;
+	border-radius:5px;
+	background-color:#1e88e5;
+	background: -webkit-gradient(linear, 0 0, 0 100%, from(#bbdefb), to(#1976d2));
+		}
+#input1{
+	position:relative;
+	height:120px;
+	width:auto;
+	//background-color:red;
+	text-align:center;
+	padding-top:20px;
+	}
+#input2{
+	position:relative;
+	height:120px;
+	width:auto;
+	//background-color:#CF9;
+	text-align:center;
+	padding-top:20px;
+	}
+#btn1{
+	//background-color:#09F;
+	display:block;
+	text-align:center;
+	height:100px;
+	
+	}
