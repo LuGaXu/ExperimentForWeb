@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>快来运动</title>
-<link rel="shortcut icon" type="image/x-icon" href="th.jpg" />
+<link rel="shortcut icon" type="image/x-icon" href="picture/th.jpg" />
 <link href="../bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 <link href="base.css" rel="stylesheet" type="text/css">
 <link href="advice.css" rel="stylesheet" type="text/css">
@@ -48,17 +48,40 @@
 	$("#tag1").click(function(){
 		  	window.location.href="exercise.html";
 		 });
-    
-    window.onload=function(){
-    	var info=getElementsByClassName("information");
-		alert(info.length);
-		alert("hello world");
-	}
-	
 });
+function writeQuestion(){
+	var str = (function(){/*
+	<!doctype html>
+	<html>
+    	<div class="page-header">
+     	 				<h1><span>填写问题</span></h1>
+                        <div style="float:right;margin-top:-40px;margin-right:50px;">
+                        	<button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-log-in"></span>&nbsp;取消						</button>
+                        	
+                        </div>
+   		</div>
+        <div id="sexandage">
+                <label>性别
+              	<select>
+                	<option value="female">女</option>
+                    <option value="male">男</option>
+                </select></label>
+                <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;年龄<input type="text" id="age" size="2px"/></label>
+        </div>
+        <div id="question">
+              	<label class="control-label" for="input">我要咨询的问题</label>
+                <textarea id="input"  class="form-control" rows="10"></textarea>
+        </div>
+        <div id="result">
+              	<input type="button" class="btn btn-primary" value="提交" name="submit"/>
+         </div>
+</html>
+*/});
+      document.getElementById("content").innerHTML=str.toString().match(/\/\*!?(?:\@preserve)?[ \t]*(?:\r\n|\n)([\s\S]*?)(?:\r\n|\n)\s*\*\//);
+	   //document.getElementById("content").innerHTML=str;
+}
 </script>
 
-<script type="text/javascript" src="base.js"></script>
 </head>
 
 <body>
@@ -150,7 +173,7 @@
                     </div>
                     <div class="target">
                     	
-                       <a href="">我要提问</a>
+                       <a href="javascript:void(0);" onClick="writeQuestion()">我要提问</a>
                     </div>
               </div>
             <!--个人信息结束-->
@@ -165,7 +188,7 @@
                     	心脏科 主任医师
                     </div>
                     <div class="target">
-                    	<a href="">我要提问</a>
+                    	<a href="javascript:void(0);" onClick="">我要提问</a>
                     </div>
             </div>
             <!--个人信息结束-->
@@ -181,7 +204,7 @@
                     </div>
                     <div class="target">
                     	
-                       <a href="">我要提问</a>
+                       <a href="javascript:void(0);" onClick="">我要提问</a>
                     </div>
             </div>
             <!--个人信息结束-->
@@ -197,7 +220,7 @@
                     </div>
                     <div class="target">
                     	
-                       <a href="">我要提问</a>
+                       <a href="javascript:void(0);" onClick="">我要提问</a>
                     </div>
             </div>
             <!--个人信息结束-->
@@ -213,7 +236,7 @@
                     </div>
                     <div class="target">
                     	
-                       <a href="">我要提问</a>
+                       <a href="javascript:void(0);" onClick="">我要提问</a>
                     </div>
             </div>
             <!--个人信息结束-->
@@ -229,15 +252,15 @@
                     </div>
                     <div class="target">
                     	
-                       <a href="">我要提问</a>
+                       <a href="javascript:void(0);" onClick="">我要提问</a>
                     </div>
               </div>
             <!--个人信息结束-->
             </div>
     	</div>
  	</div>
+    <script>
     
-
-    
+    </script>
 </body>
 </html>
