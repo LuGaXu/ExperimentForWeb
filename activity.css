@@ -7,8 +7,6 @@
 	height:100px;
 	width:85%;
 	border-radius:5px;
-	//background-color:#ffffff;
-	//border:2px solid #C2E0F4;
 	}
 .theme{
 	height:100px;
@@ -36,15 +34,25 @@
 	height:100px;
 	width:25%;
 	border-radius:5px;
-	text-align:center;
-	
+	text-align:center;	
 	float:left;
 	}
 .target{
 	height:100px;
 	width:25%;
 	border-radius:5px;
-	text-align:center;
-	
+	text-align:center;	
 	float:left;
 	}
+#gameInfo{
+	margin-top:50px;
+	width:100%;
+	height:150px;
+	border-radius:5px;
+	background-color:#e0e0e0;
+}
+#member{
+	width:100%;
+	height:auto;
+	
+}

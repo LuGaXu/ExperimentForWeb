@@ -1,0 +1,12 @@
+@charset "utf-8";
+/* CSS Document */
+#date{
+	height:100px;
+	width:60%;
+	margin-left:40%;
+	padding-top:40px;
+	}
+#data{
+	height:430px;
+	width:100%;
+}
