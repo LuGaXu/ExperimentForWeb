@@ -4,9 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>快来运动</title>
-<link rel="shortcut icon" type="image/x-icon" href="th.jpg" />
+<link rel="shortcut icon" type="image/x-icon" href="picture/th.jpg" />
 <link href="../bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 <link href="base.css" rel="stylesheet" type="text/css">
+<link href="setting.css" rel="stylesheet" type="text/css">
 <script src="../bootstrap-3.3.5-dist/js/jquery-2.1.4.min.js">
 </script>
 <script src="../bootstrap-3.3.5-dist/js/bootstrap.min.js">
@@ -41,7 +42,6 @@
 });
 </script>
 
-<script type="text/javascript" src="base.js"></script>
 </head>
 
 <body>
@@ -109,12 +109,31 @@
              <!--nav-pill end-->
             </div>
      		<div class="col-md-8" style="" id="content">
-            	<div class="page-header">
-     	 				<h1><span>About us</span></h1>
-    			 </div>
-     			<div class="content">  
-               		 <p>努力开发中。。。。。。</p>     
-            	</div>
+            	<form class="form-horizontal" style="font-family:楷体,幼圆;font-size:1.5em;margin-top:100px;">
+                	 <div class="form-group">
+    					<label for="inputName" class="col-sm-2 control-label">昵称</label>
+    					<div class="col-sm-6">
+      						<input type="text" class="form-control" id="inputName"  placeholder="苏菲的世界" >
+   						</div>
+                        <div class="col-sm-4"></div>
+ 					 </div>
+                     <div class="form-group">
+                     	<label  class="col-sm-2 control-label">性别</label>
+                     
+                     	<label class="radio-inline col-sm-2" style="margin-left:14px;">
+                          	<input type="radio" name="sexOptions" id="radio1" value="option1"> 男
+                        </label>
+                        <label class="radio-inline col-sm-2">
+                          	<input type="radio" name="sexOptions" id="radio2" value="option2"> 女
+                        </label>
+                        <div class="col-sm-6"></div>
+                     </div>
+                     <div class="form-group">
+                     
+                     </div>
+                     <div class="form-group"></div>
+                     <div class="form-group"></div>
+                </form>
             </div>
     	</div>
  	</div>

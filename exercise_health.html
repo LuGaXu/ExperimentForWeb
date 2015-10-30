@@ -11,6 +11,7 @@
 </script>
 <script src="../bootstrap-3.3.5-dist/js/bootstrap.min.js">
 </script>
+<script src="../Chart.js-master/Chart.js"></script>
 <link href="login.css" rel="stylesheet" type="text/css">
 <link href="exercise.css" rel="stylesheet" type="text/css">
 <script>
@@ -136,13 +137,38 @@
                     <input class="btn btn-primary" type="submit" value="查看当日健康状况"></p>
                     </form>
                 </div>
+                <!--
                 <div id="data">
                 	<img style="padding-top:100px;" src="picture/warn.png" class="img-responsive center-block" alt="暂无数据"/>
-                </div>
+                </div>-->
+                <div class="btn-group" role="group" style="width:100%;padding-left:65%;">
+  					<button type="button" class="btn btn-default active">心率</button>
+  					<button type="button" class="btn btn-default">血压</button>
+				</div>
+                <canvas style="margin-left:15%;" id="myChart" width="450" height="300"></canvas>
             </div>
     	</div>
  	</div>
     <script>
+		window.onload=function(){
+			var data = {
+				labels : ["0","2","4","6","8","10","12","14","16","18","20","22","24"],
+				datasets : [
+						
+						{
+							fillColor : "rgba(102,102,255,0.5)",
+							strokeColor : "rgba(102,102,255,1)",
+							pointColor : "rgba(102,102,255,1)",
+							pointStrokeColor : "#fff",
+							data : [65,63,74,32,2000,100,100,20,500,300,45,0,0]
+						}
+						
+						
+					]
+				}
+    		var ctx = document.getElementById("myChart").getContext("2d");
+			var myNewChart = new Chart(ctx).Line(data);	
+		}
 		var date=new Date();
 		$("#monthId").val(date.getMonth()+1);
 		updateDay();

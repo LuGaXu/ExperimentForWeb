@@ -11,6 +11,7 @@
 </script>
 <script src="../bootstrap-3.3.5-dist/js/bootstrap.min.js">
 </script>
+<script src="../Chart.js-master/Chart.js"></script>
 <link href="login.css" rel="stylesheet" type="text/css">
 <link href="exercise.css" rel="stylesheet" type="text/css">
 <script>
@@ -140,6 +141,12 @@
                     <input class="btn btn-primary" type="submit" value="查看当日运动状况"></p>
                     </form>
                 </div>
+                <!--#date end-->
+                <div class="btn-group" role="group" style="width:100%;padding-left:65%;">
+  					<button type="button" class="btn btn-default active">步数</button>
+  					<button type="button" class="btn btn-default">距离(m)</button>
+				</div>
+                <canvas style="margin-left:15%;" id="myChart" width="450" height="300"></canvas>
             </div>
     	</div>
  	</div>
@@ -155,6 +162,26 @@
 			//	if(month[0].childNodes[i].childNodes[0])
 			//	    alert(month[0].childNodes[i].childNodes[0].nodeValue);
 			//	}
+			var data = {
+				labels : ["0","2","4","6","8","10","12","14","16","18","20","22","24"],
+				datasets : [
+						
+						{
+							fillColor : "rgba(102,102,255,0.5)",
+							//fillColor : "rgba(151,187,205,0.5)",
+							//strokeColor : "rgba(151,187,205,1)",
+							//pointColor : "rgba(151,187,205,1)",
+							strokeColor : "rgba(102,102,255,1)",
+							pointColor : "rgba(102,102,255,1)",
+							pointStrokeColor : "#fff",
+							data : [0,0,0,50,2000,100,100,20,500,300,45,0,0]
+						}
+						
+						
+					]
+				}
+    		var ctx = document.getElementById("myChart").getContext("2d");
+			var myNewChart = new Chart(ctx).Line(data);
 			
 		}
 			function updateDay(){
@@ -211,8 +238,6 @@
 					jQuery("#dayId").append("<option value=\""+(j+1)+"\">"+(j+1)+"</option>")	
 				}
 			}
-			
-		
     </script>
 </body>
 </html>
