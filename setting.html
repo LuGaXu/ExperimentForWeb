@@ -118,28 +118,113 @@
                         <div class="col-sm-4"></div>
  					 </div>
                      <div class="form-group">
-                     	<label  class="col-sm-2 control-label">性别</label>
-                     
+                     	<label  class="col-sm-2 control-label">性别</label>         
                      	<label class="radio-inline col-sm-2" style="margin-left:14px;">
                           	<input type="radio" name="sexOptions" id="radio1" value="option1"> 男
                         </label>
                         <label class="radio-inline col-sm-2">
-                          	<input type="radio" name="sexOptions" id="radio2" value="option2"> 女
+                          	<input type="radio" name="sexOptions" id="radio2" value="option2" checked="checked"> 女
                         </label>
                         <div class="col-sm-6"></div>
                      </div>
                      <div class="form-group">
-                     
+                     	<label  class="col-sm-2 control-label">生日</label>
+                         <select class="form-control col-sm-2" name="month" id="monthId" onChange="updateDay()" style="width:70px;margin-left:10px;">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                    	</select>
+                        <label  class="col-sm-1">月</label>
+                    	<select class="form-control col-sm-2" name="day" id="dayId"  style="width:70px;">                      	
+                    	</select>
+                         <label  class="col-sm-1">日</label>
                      </div>
-                     <div class="form-group"></div>
-                     <div class="form-group"></div>
+                     <div class="form-group">
+                     	<label  for="inputHome" class="col-sm-2 control-label">所在地</label>
+                        <div class="col-sm-6">
+      						<input type="text" class="form-control" id="inputHome"  placeholder="江苏南京" >
+   						</div>
+                        <div class="col-sm-4"></div>
+                        
+                     </div>
+                     <div class="form-group">
+                     	<label  for="inputInterest" class="col-sm-2 control-label">兴趣</label>
+                         <div class="col-sm-6">
+      						<input type="text" class="form-control" id="inputInterest"  placeholder="吃饭睡觉打豆豆" >
+   						</div>
+                        <div class="col-sm-4"></div>
+                     </div>
+                     <div class="form-group">
+                     	<label  class="col-sm-2 control-label">运动宣言</label>
+                        <textarea  rows="4" class="form-control col-sm-5" style="margin-left:15px;width:80%;"></textarea>
+                     </div>
+                     <button type="button" class="btn btn-primary col-sm-offset-2">保存</button>
                 </form>
             </div>
     	</div>
  	</div>
-   
-    
- 
-    
+    <script>
+    	window.onload=function(){
+			updateDay();
+		}
+		function updateDay(){
+			  var month=jQuery("#monthId").val();
+			  jQuery("#dayId").empty();
+			  var day;
+			  switch(month){
+			  case "1":
+				  day=31;
+				  break;
+			  case "2":
+				  day=29;
+				  break;
+			  case "3":
+				  day=31;
+				  break;	
+			  case "4":
+				  day=30;
+				  break;
+			  case "5":
+				  day=31;
+				  break;
+			  case "6":
+				  day=30;
+				  break;
+			  case "7":
+				  day=31;
+				  break;
+			  case "8":
+				  day=31;
+				  break;
+			  case "9":
+				  day=30;
+				  break;
+			  case "10":
+				  day=31;
+				  break;
+			  case "11":
+				  day=30;
+				  break;
+			  case "12":
+				  day=31;
+				  break;
+			  default:
+				  day=0;
+			 }
+		  
+			  for(var j=0;j<day;j++){
+				  jQuery("#dayId").append("<option value=\""+(j+1)+"\">"+(j+1)+"</option>")	
+			  }	
+		}
+    </script>   
 </body>
 </html>
