@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>快来运动</title>
-<link rel="shortcut icon" type="image/x-icon" href="th.jpg" />
+<link rel="shortcut icon" type="image/x-icon" href="picture/th.jpg" />
 <link href="../bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 <link href="base.css" rel="stylesheet" type="text/css">
 <script src="../bootstrap-3.3.5-dist/js/jquery-2.1.4.min.js">
@@ -41,7 +41,6 @@
 });
 </script>
 
-<script type="text/javascript" src="base.js"></script>
 </head>
 
 <body>
@@ -109,11 +108,24 @@
              <!--nav-pill end-->
             </div>
      		<div class="col-md-8" style="" id="content">
-            	<div class="page-header">
-     	 				<h1><span>About us</span></h1>
-    			 </div>
-     			<div class="content">  
-               		 <p>努力开发中。。。。。。</p>     
+            	<div  style="margin-top:50px;">
+                    <div class="col-sm-4">
+                        <select class="form-control" name="type">
+                            <option value="">普通用户</option>
+                            <option value="">医生</option>
+                            <option value="">教练</option>
+                        </select>	
+                     </div>
+                    <button type="button" name="typebtn" class="btn btn-primary col-sm-1">确定</button>	
+                    <form  role="search">
+        				<div class="form-group col-sm-4 col-sm-offset-1">
+         					 <input type="text" class="form-control" placeholder="用户名">
+       					 </div>
+        				<button type="submit" class="btn btn-success  col-sm-2">查找</button>
+     				 </form>
+    		</div>	
+     			<div>  
+               		 
             	</div>
             </div>
     	</div>

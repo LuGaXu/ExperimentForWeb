@@ -53,6 +53,8 @@
 }
 #member{
 	width:100%;
-	height:auto;
-	
+	height:auto;	
 }
+#modalbody{
+	height:300px;
+	font-family:'微软雅黑','宋体','新宋体';}

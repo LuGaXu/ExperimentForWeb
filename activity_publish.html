@@ -6,11 +6,16 @@
 <title>快来运动</title>
 <link rel="shortcut icon" type="image/x-icon" href="picture/th.jpg" />
 <link href="../bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="../bootstrap-3.3.5-dist/bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css">
+<link href="../bootstrap-3.3.5-dist/bootstrap-datetimepicker-master/less/datetimepicker.less" rel="stylesheet/less" type="text/less">
+<link href="../bootstrap-3.3.5-dist/bootstrap-datetimepicker-master/build/build_standalone.less" rel="stylesheet/less" type="text/less">
 <link href="base.css" rel="stylesheet" type="text/css">
 <link href="activity.css" rel="stylesheet" type="text/css">
 <script src="../bootstrap-3.3.5-dist/js/jquery-2.1.4.min.js">
 </script>
 <script src="../bootstrap-3.3.5-dist/js/bootstrap.min.js">
+</script>
+<script src="../bootstrap-3.3.5-dist/bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.min.js">
 </script>
 <link href="login.css" rel="stylesheet" type="text/css">
 <script>
@@ -175,7 +180,7 @@
                        <div class="activity" >
                 	<div class="theme">
                     	<!--10个字，20byte-->
-                    	<p>快来和我们一起pk吧</p>
+                    	<p>我就测测可以发几字</p>
                     	
                     </div>
                     <div class="num">
@@ -194,7 +199,7 @@
                         <p style="font-size:1.5em">每天慢跑3公里</p>
                     </div>
                 </div>
-                      <div style="margin-left:50px;">
+                      <div style="margin-left:50px;margin-bottom:50px;">
                        	<a href="#">修改</a>
                        	<a href="#">删除</a>
                        </div>
@@ -207,15 +212,40 @@
  	</div>
   
    <!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="margin-top:70px;">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">活动信息</h4>
+        <h4 class="modal-title" id="myModalLabel" style="font-size:2em;font-family:'宋体', '微软雅黑', '新宋体'"><strong>活动信息</strong></h4>
       </div>
-      <div class="modal-body">
-         
+      <div class="modal-body"  id="modalbody">
+      	<div class="form-group">
+             <label class="col-sm-4 control-label">活动开始时间</label>
+             <div class="col-sm-6">
+                <input size="16" type="text" value="2015-11-11 14:45" readonly class="form_datetime form-control">
+             </div>
+             <div class="col-sm-2"></div>
+         </div>
+         <div class="form-group">           
+             <label style="margin-top:30px;" class="col-sm-4 control-label">活动结束时间</label>
+             <div style="margin-top:30px;" class="col-sm-6">
+                <input size="16" type="text" value="2015-12-11 14:45" readonly class="form_datetime form-control">
+             </div>
+             <div class="col-sm-2"></div>
+         </div>
+         <div class="form-group">
+         	<label style="margin-top:30px;" class="col-sm-4 control-label">活动目标</label>
+             <div style="margin-top:30px;" class="col-sm-6">
+                <input size="16" type="text"  class="form-control">
+             </div>
+         </div>
+         <div class="form-group">
+         	<label style="margin-top:30px;" class="col-sm-4 control-label">活动主题(不超过9个字)</label>
+             <div style="margin-top:30px;" class="col-sm-6">
+                <input size="16" type="text" class="form-control">
+             </div>
+         </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
@@ -224,6 +254,8 @@
     </div>
   </div>
 </div>
-
+<script>
+	  $(".form_datetime").datetimepicker({format: 'yyyy-mm-dd hh:ii'});
+</script>
 </body>
 </html>
