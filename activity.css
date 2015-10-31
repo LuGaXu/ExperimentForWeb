@@ -22,7 +22,7 @@
 	}
 .num{
 	height:100px;
-	width:25%;
+	width:20%;
 	border-radius:5px;
 	text-align:center;
 	color:#000000;
@@ -39,7 +39,7 @@
 	}
 .target{
 	height:100px;
-	width:25%;
+	width:30%;
 	border-radius:5px;
 	text-align:center;	
 	float:left;
