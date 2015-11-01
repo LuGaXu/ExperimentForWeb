@@ -7,6 +7,7 @@
 <link rel="shortcut icon" type="image/x-icon" href="picture/th.jpg" />
 <link href="../bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 <link href="base.css" rel="stylesheet" type="text/css">
+<link href="setting.css" rel="stylesheet" type="text/css">
 <script src="../bootstrap-3.3.5-dist/js/jquery-2.1.4.min.js">
 </script>
 <script src="../bootstrap-3.3.5-dist/js/bootstrap.min.js">
@@ -111,6 +112,7 @@
             	<div  style="margin-top:50px;">
                     <div class="col-sm-4">
                         <select class="form-control" name="type">
+                        	<option value="">所有用户</option>
                             <option value="">普通用户</option>
                             <option value="">医生</option>
                             <option value="">教练</option>
@@ -119,16 +121,106 @@
                     <button type="button" name="typebtn" class="btn btn-primary col-sm-1">确定</button>	
                     <form  role="search">
         				<div class="form-group col-sm-4 col-sm-offset-1">
-         					 <input type="text" class="form-control" placeholder="用户名">
+         					 <input type="text" class="form-control" placeholder="用户名或邮箱">
        					 </div>
         				<button type="submit" class="btn btn-success  col-sm-2">查找</button>
      				 </form>
-    		</div>	
-     			<div>  
-               		 
-            	</div>
-            </div>
+    		  </div>	
+     	  	  <div style="padding-top:100px; text-align:center">  
+             	<table class="table table-hover">
+                    	<tr class="danger"> 
+                        	<td><strong>权限</strong></td>
+                            <td><strong>用户名</strong></td>
+                            <td><strong>邮箱</strong></td>
+                            <td><strong>编辑</strong></td>
+                        </tr>
+                        <tr>
+                            <td>普通用户</td>
+                            <td>小芳</td>
+                            <td>427384734@qq.com</td>
+                            <td><div onClick="openModal('普通用户','小芳','427384734@qq.com')"><span class="glyphicon glyphicon-pencil"></span></div></td>
+                        </tr>
+                        <tr>
+                            <td>普通用户</td>
+                            <td>小娴</td>
+                            <td>42sdfsd34@qq.com</td>
+                            <td><div onClick="openModal('普通用户','小娴','42sdfsd34@qq.com')"><span class="glyphicon glyphicon-pencil"></span></div></td>
+                        </tr>
+                        <tr>
+                           <td>医生</td>
+                            <td>小晨</td>
+                            <td>234df734@qq.com</td>
+                            <td><div onClick="openModal('医生','小晨','234df734@qq.com')"><span class="glyphicon glyphicon-pencil"></span></div></td>
+                        </tr>
+                        
+                    </table>	  		 
+              </div>
+             
+           </div>
     	</div>
  	</div>
+    
+     <!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="margin-top:70px;">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel" style="font-size:2em;font-family:'宋体', '微软雅黑', '新宋体'"><strong>修改权限</strong></h4>
+      </div>
+      <div class="modal-body"  id="modalbody">
+      	<div class="form-group">
+             <label class="col-sm-4 control-label">用户名</label>
+             <div class="col-sm-6">
+                <input id="hostname" size="16" type="text" value=" " readonly class="form-control">
+             </div>
+             <div class="col-sm-2"></div>
+         </div>
+         <div class="form-group">           
+             <label style="margin-top:30px;" class="col-sm-4 control-label">邮箱</label>
+             <div style="margin-top:30px;" class="col-sm-6">
+                <input size="16" id="hostemail" type="text" value="" readonly class="form-control">
+             </div>
+             <div class="col-sm-2"></div>
+         </div>
+         <div class="form-group">
+         	<label style="margin-top:30px;" class="col-sm-4 control-label">权限</label>
+             <div style="margin-top:30px;" class="col-sm-6">
+                <select id="hosttype" class="form-control">
+                	<option value="user">普通用户</option>
+                    <option value="doctor">医生</option>
+                    <option value="teacher">教练</option>
+                    <option value="admin">系统管理员</option>
+                </select>
+             </div>
+         </div>
+         
+      </div>
+      <div class="modal-footer" style="padding-right:100px;">
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        <button type="button" class="btn btn-primary">确认</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+ function openModal(type,name,mail){
+	$("#myModal").modal();
+	$("#hostname").val(name);
+	$("#hostemail").val(mail);
+	var group=document.getElementById('hosttype').options;
+	var truth=false;
+	for(var i=0;i<group.length;i++){
+		if(group[i].innerHTML==type){
+			group[i].selected=true;
+			truth=true;
+			break;
+		}	
+	}
+	if(!truth){
+		alert('error type');	
+	}
+ }
+</script>
 </body>
 </html>
