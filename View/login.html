@@ -1,0 +1,115 @@
+﻿<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>快来运动</title>
+<link rel="shortcut icon" type="image/x-icon" href="picture/th.jpg" />
+<link href="../bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<script src="../bootstrap-3.3.5-dist/js/jquery-2.1.4.min.js">
+</script>
+<script src="../bootstrap-3.3.5-dist/js/bootstrap.min.js">
+</script>
+<link href="login.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body style="background-image:url(picture/background.jpg)">
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+   <div class="navbar-header" style="text-align:center">
+      <a class="navbar-brand" href="#"><strong >快来运动</strong></a>
+   </div>
+   </div>
+</nav>
+
+	<div id="frame">
+        	<div id="backgroundLayer"></div>
+        	<form class="form-horizontal" style="position:relative;color:#000000" action="home.html">
+            	<div class="form-group">
+                	<label for="user" class="col-xs-3 control-label" style="text-align:center; font-family:Consolas, 'Andale Mono', 'Lucida Console', 'Lucida Sans Typewriter', Monaco, 'Courier New', monospace ;font-size:20px;position:relative;color:#000000">用户名</label>
+                    <div class="col-xs-9">
+               			<input type="text" class="form-control" id="user" placeholder="用户名" style="position:relative;color:#000000"/>
+                	</div>
+                </div>
+                <div class="form-group" style="padding-top:10px;">
+                	<label for="password" class="col-xs-3 control-label" style="text-align:center;font-family:Consolas, 'Andale Mono', 'Lucida Console', 'Lucida Sans Typewriter', Monaco, 'Courier New', monospace;font-size:20px;vertical-align:middle">密码</label>
+                    <div class="col-xs-9">
+               			<input type="password" class="form-control" id="password" placeholder="密码"/>
+                	</div>
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-offset-3 col-xs-9">			
+                        <label>
+          					<input type="checkbox" > Remember me
+        				</label>
+                        <a href="register.html">&nbsp;&nbsp;&nbsp;还没有账号？立即注册</a>
+                	</div>
+                </div>
+                <div class="form-group">
+                	 <div class="col-xs-offset-3 col-xs-9">
+               			<input type="button"  class="btn btn-primary" id="login" value="登录"/>
+                	</div>
+                </div>
+            </form>
+        </div>
+</body>
+<script>
+$("#login").click(function(){
+	var name=$("#user").val();
+	var password=$("#password").val();
+	
+	var xmlHttp=GetXmlHttpObject();
+
+	if (xmlHttp==null){
+ 		alert ("Browser does not support HTTP Request")
+ 		return
+ 	}
+ 	xmlHttp.onreadystatechange = sign_up_callback;
+	xmlHttp.open("POST", "../php/login.php", false);
+	xmlHttp.setRequestHeader("Content-Type",
+			"application/x-www-form-urlencoded");
+	xmlHttp.send("name="+name+"&password="+password);
+
+});
+var xmlHttp=null;
+function GetXmlHttpObject(){
+	xmlHttp=null;
+	try{
+ 	// Firefox, Opera 8.0+, Safari
+ 		xmlHttp=new XMLHttpRequest();
+ 	}catch (e){
+    // Internet Explorer
+    	try{
+  			xmlHttp=new ActiveXObject("Msxml2.XMLHTTP");
+  		}catch (e){
+  			xmlHttp=new ActiveXObject("Microsoft.XMLHTTP");
+  		}
+ 	}
+	return xmlHttp;
+}
+function sign_up_callback(){
+	if (xmlHttp.readyState==4 || xmlHttp.readyState=="complete") {
+		
+		if (xmlHttp.status == 200) {
+			var data=xmlHttp.responseText;
+			//alert(data);
+			data=$.parseJSON(data);
+			data=data.message;
+			//alert(data);
+		  	if(data=="login success"){
+				   // alert("用户名已存在！");			
+					window.location.href="home.html";		
+				}else if(data=="login failed"){
+					alert("登陆失败");
+					window.location.href="login.html";
+				}else{
+				   alert("登陆失败");
+					window.location.href="login.html";
+				}
+	}
+	}
+}
+
+</script>
+</html>

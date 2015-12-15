@@ -1,0 +1,24 @@
+<?php
+		$old=$_POST["old"];
+		$arr = array('message' =>$old);
+		exit(json_encode($arr));
+		$new=$_POST["new"];
+		session_start();
+		
+		include 'db.php';
+		$sql="select password from User where name='".$_SESSION['name']."';";
+		$ret = $db->query($sql);
+		while ($row = $ret->fetchArray(SQLITE3_ASSOC)) {
+			$hash=$row['password'];
+			if(!password_verify($old, $hash)){
+				$arr = array('message' =>"old password error");
+				$arr = array('message' =>$old);
+				exit(json_encode($arr));
+			}
+		}
+	
+		$sql="update User set password=".$new.";";
+		$db->exec($sql);
+		$arr = array('message' =>"update success");
+		exit(json_encode($arr));
+?>

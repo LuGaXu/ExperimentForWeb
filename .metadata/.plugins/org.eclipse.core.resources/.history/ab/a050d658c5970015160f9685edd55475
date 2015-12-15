@@ -1,0 +1,10 @@
+<?php
+		$old=$_POST["old"];
+		$new=$_POST["new"];
+		
+		include 'db.php';
+		$sql="update activity set start='".$start."',stop='".$stop."',target='".$target."',theme='".$theme."' where id=".$id.";";
+		$db->exec($sql);
+		$arr = array('message' =>"update success");
+		exit(json_encode($arr));
+?>

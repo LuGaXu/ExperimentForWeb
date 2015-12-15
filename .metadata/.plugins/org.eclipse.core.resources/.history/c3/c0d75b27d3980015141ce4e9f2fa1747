@@ -1,0 +1,7 @@
+<?php
+		//"fromId="+did+"&toId="+currentFromId+"&mid="+mid+"&reply="+reply
+		include 'db.php';
+		$fromId=$_POST['fromId'];
+		$toId=$_POST['toId'];
+		$mid=$_POST['mid'];
+		$reply=$_POST['reply'];

@@ -1,0 +1,8 @@
+<?php
+	include 'db.php';
+	$id=$_POST['id'];
+	$sql="update message set read=1 where id=$id;";
+	
+	echo $sql;
+	$db->exec($sql);
+?>

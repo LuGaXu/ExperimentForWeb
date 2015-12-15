@@ -1,0 +1,12 @@
+<?php
+		$old=$_POST["old"];
+		$new=$_POST["new"];
+		session_start();
+		
+		include 'db.php';
+		$sql="select count(*),* from User where name='".$_SESSION['name']."';";
+		$sql="update activity set start='".$start."',stop='".$stop."',target='".$target."',theme='".$theme."' where id=".$id.";";
+		$db->exec($sql);
+		$arr = array('message' =>"update success");
+		exit(json_encode($arr));
+?>

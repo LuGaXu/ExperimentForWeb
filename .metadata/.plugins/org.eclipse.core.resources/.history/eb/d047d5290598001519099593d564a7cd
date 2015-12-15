@@ -1,0 +1,13 @@
+<?php
+	$id=$_POST["id"];
+	$start=$_POST["start"];
+	$stop=$_POST["stop"];
+	$target=$_POST["target"];
+	$theme=$_POST["theme"];
+	include 'db.php';
+	$db->exec("PRAGMA foreign_keys = ON"); 
+	$sql="update activity set start='".$start."',stop='".$stop."',target='".$target."',theme='".$theme."' where id=".$id.";";
+	$db->exec($sql);
+	$arr = array('message' =>"update success");
+	exit(json_encode($arr));
+?>

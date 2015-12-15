@@ -1,0 +1,8 @@
+<?php
+		//"uid="+uid+"&did="+did+"&gender="+gender+"&age="+age+"&text="+text
+		$from=$_POST['uid'];
+		$to=$_POST['did'];
+		$gender=$_POST['gender'];
+		$age=$_POST['age'];
+		$text=$_POST['text'];
+		

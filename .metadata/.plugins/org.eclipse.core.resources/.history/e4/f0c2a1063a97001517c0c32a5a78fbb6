@@ -1,0 +1,9 @@
+<?php
+	$id=$_POST["id"];
+	$start=$_POST["start"];
+	$stop=$_POST["stop"];
+	$target=$_POST["target"];
+	$theme=$_POST["theme"];
+	include 'db.php';
+	
+?>

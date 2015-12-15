@@ -1,0 +1,16 @@
+<?php
+		//"name="+newname+"&gender="+newgender+"&birthmonth="+newmonth+"&birthday="+newday
+// 						+"&interest="+newinterest+"&location="+newlocation+"&motto="+newmotto
+		session_start();
+		$name=$_POST["name"];
+		$gender=$_POST["gender"];
+		$birthmonth=$_POST["birthmonth"];
+		$birthday=$_POST["birthday"];
+		$interest=$_POST["interest"];
+		$location=$_POST["location"];
+		$motto=$_POST["motto"];
+		
+		include 'db.php';
+		
+		
+?>

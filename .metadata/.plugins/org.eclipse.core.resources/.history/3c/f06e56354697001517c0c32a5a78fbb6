@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>快来运动</title>
+<link rel="shortcut icon" type="image/x-icon" href="../../View/picture/th.jpg" />
+<link href="../../bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="../../View/base.css" rel="stylesheet" type="text/css">
+<link href="../../View/activity.css" rel="stylesheet" type="text/css">
+<script src="../../bootstrap-3.3.5-dist/js/jquery-2.1.4.min.js">
+</script>
+<script src="../../bootstrap-3.3.5-dist/js/bootstrap.min.js">
+</script>
+<link href="../../View/login.css" rel="stylesheet" type="text/css">
+<script>
+   $(document).ready(function() {
+	   $("#tag1").hover(function(){
+		     $("#tag1").addClass("active");
+		 });
+	 $("#tag1").mouseleave(function(){
+		 	  $("#tag1").removeClass("active");
+		 });
+    
+	$("#tag3").hover(function(){
+		     $("#tag3").addClass("active");
+		 });
+	 $("#tag3").mouseleave(function(){
+		 	  $("#tag3").removeClass("active");
+		 });
+	$("#tag4").hover(function(){
+		     $("#tag4").addClass("active");
+		 });
+	 $("#tag4").mouseleave(function(){
+		 	  $("#tag4").removeClass("active");
+		 });
+	$("#tag5").hover(function(){
+		     $("#tag5").addClass("active");
+		 });
+	 $("#tag5").mouseleave(function(){
+		 	  $("#tag5").removeClass("active");
+		 });
+});
+</script>
+
+</head>
+
+<body>
+
+	<!--head begin-->
+ 
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation" id="bar">
+     <div class="container">     
+   <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" 
+         data-target="#example-navbar-collapse">
+         <span class="sr-only">切换导航</span>
+         <span class="icon-bar"></span>
+         <span class="icon-bar"></span>
+         <span class="icon-bar"></span>
+      </button>    
+      <a class="navbar-brand" href="#">快来运动</a>
+   </div>
+   <div class="collapse navbar-collapse" id="example-navbar-collapse">
+      <ul class="nav navbar-nav navbar-right">
+         <li id="tag1"><a href="../../View/exercise.html"><strong>运动</strong></a></li>
+         <li id="tag2" class="active"><a href="../../View/activity.html"><strong>活动</strong></a></li>
+         <li id="tag3"><a href="../../View/advice.html"><strong>建议</strong></a></li>
+   
+        
+         <li><a href="#"><span class="glyphicon glyphicon-envelope"></span></a></li>
+         <li id="tag5" class="dropdown">  	
+            <a href="#"  class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-cog " ></span></a>        	
+            <ul class="dropdown-menu dropdown-menu-right " aria-labelledby="dLabel">
+               <li><a href="../../View/setting.html">个人设置</a></li>
+          
+               <li><a href="../../View/login.html">退出登录</a></li>             
+            </ul>
+         </li>         
+      </ul>
+  	 </div>
+   	</div>
+	</nav>
+	<!--head end-->
+    
+    <!--breadcrumb begin-->
+    <div class="breadcrumbs-container" id="bread">
+     <div class="container" >
+    <ol class="breadcrumb" style="background-color:#e0e0e0">
+  		<li><a href="../../View/home.html">Home</a></li>
+  		<li class="active">活动</li>
+	</ol>
+    </div>
+    </div>
+    <!--breadcrumg end-->
+    
+    
+    <div class="container">
+    	<div class="row" >
+    		<div class="col-md-4" style="height:300px;">
+             <!--nav-pill begin-->
+            <div id="pill">
+            	<ul class="nav nav-pills nav-stacked">
+    			<h3>活动管理</h3>
+  		
+                <li role="presentation"><a href="../../View/activity.html">参与活动</a></li>
+                <li role="presentation"  class="active"><a href="../../View/activity_mine.html">我的活动</a></li>
+                <li role="presentation" class="pillElement"><a href="../php/activity/acitivity_publish.php">发布活动</a></li>
+			</ul>
+            </div>
+             <!--nav-pill end-->
+            </div>
+     		<div class="col-md-8" id="content" style="top:100px;">
+            	<!--活动内容-->
+     			<?php 
+	     			session_start();
+	     			include 'db.php';
+	     			$name=$_SESSION['name'];
+	     			
+	     			$sql="select * from activity where id in(select aid from activity_member where name='".$name."') order by stop desc;";
+	     			$ret = $db->query($sql);
+	     			if($ret){
+	     				while ($row = $ret->fetchArray(SQLITE3_ASSOC)) {
+	     					$id=$row['id'];
+	     					$start=$row['start'];
+	     					$startdate=explode(' ', $start)[0];
+	     					$stop=$row['stop'];
+	     					$target=$row['target'];
+	     					$theme=$row['theme'];
+	     					 
+	     					?>
+	     				   <div class="activity" >
+	     					  <div class="theme">
+	     					       <!--10个字，20byte-->
+	     					       <p><?php echo $theme?></p>
+	     					   </div>
+	     					   <div class="num">
+	     					       <br/>
+	     					       <p>参与人数</p>
+	     					       <p style="font-size:2em">
+	     					       <?php 
+	     					         $sql1="select count(*) from activity_member where aid=".$id.";";
+	     					         $ret1 = $db->query($sql1);
+	     					         $num=0;
+	     					         while ($row1 = $ret1->fetchArray(SQLITE3_ASSOC)) {
+	     					               $num=$row1['count(*)'];
+	     					         }
+	     					         echo $num;
+	     					         ?>
+	     					      </p>
+	     					   </div>
+	     					   <div class="start">
+	     					        <br/>
+	     					        <p>开始时间</p>
+	     					        <p style="font-size:1.6em"><?php echo  $startdate?></p>
+	     					   </div>
+	     					   <div class="target">
+	     					        <br/>
+	     					        <p style="font-size:1.5em"><?php echo $target?></p>
+	     					   </div> 
+	     					</div>  
+	     		<?php    					
+	     				}
+	     			}
+	     		?>
+     			
+                <div class="activity" >
+                	<div class="theme">
+                    	<!--10个字，20byte-->
+                    	<p>快来和我们一起pk吧</p>
+                    	
+                    </div>
+                    <div class="num">
+                    	<br/>
+                    	<p>参与人数</p>
+                        <p style="font-size:2em">26</p>
+                    </div>
+                    <div class="start">
+                    	<br/>
+                        <p>开始时间</p>
+                        <p style="font-size:1.6em">2月13号23:00</p>
+                    </div>
+                    <div class="target">
+                    	<br/>
+                        <p>目标</p>
+                        <p style="font-size:1.5em">每天步行10000步</p>
+                    </div>
+                </div>
+                
+                
+                <!--活动结束-->
+            </div>
+    	</div>
+ 	</div>
+</body>
+</html>

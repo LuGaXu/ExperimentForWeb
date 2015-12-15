@@ -1,0 +1,28 @@
+<?php
+// 		$password=$_POST["password"];
+// 		$email=$_POST["email"];
+// 		$name=$_POST["name"];
+		$type="普通用户";
+		$password="password";
+		$email="email";
+		$name="name";
+		
+			
+		$hash= password_hash($password, PASSWORD_DEFAULT);
+			
+		 include 'db.php';
+		$sql="select count(*) from User where name='$name';";
+		$ret = $db->query($sql);
+		while ($row = $ret->fetchArray(SQLITE3_ASSOC)) {
+			$num=$row['count(*)'];
+			if($num==1){
+				echo  "存在相同的用户名！";
+				exit();
+			} 
+		 }
+		$sql = "insert into User(name,email,password,type,gender)
+    values ('".$name."','".$email."','".$hash."','".$type.",'M');";
+		$db->exec($sql); 
+		echo "注册成功！";
+		
+?>

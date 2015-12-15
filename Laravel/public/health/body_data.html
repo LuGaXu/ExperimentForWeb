@@ -1,0 +1,324 @@
+<!doctype html>
+<html class="no-js" lang="">
+<head>
+	<meta charset="utf-8"/>
+	<meta http-equiv="x-ua-compatible" content="ie=edge"/>
+	<title>Health+&nbsp;健康管理</title>
+	<meta name="description" content=""/>
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+	<link rel="apple-touch-icon" href="apple-touch-icon.png"/>
+	<!-- Place favicon.ico in the root directory -->
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link rel="stylesheet" href="../css/materialize.css"/>
+
+	<style type="text/css">
+		#BMI{
+			color: #009688;
+			font-size: 24px;
+		}
+	</style>
+
+</head>
+
+<body>
+
+	<header>
+		<nav>
+			<div class="nav-wrapper">
+				<a href="#" class="brand-logo">Health+</a>
+				<a href="#" data-activates="mobile-demo" class="button-collapse"> <i class="material-icons">menu</i>
+				</a>
+				<ul id="nav-mobile" class="right hide-on-med-and-down">
+					<li>
+						<a href="../index.html">首页</a>
+					</li>
+					<li class="active">
+						<a href="body_data.html">健康管理</a>
+					</li>
+					<li>
+						<a href="../activity/activity_index.html">活动</a>
+					</li>
+					<li>
+						<a href="../coach/coach_index.html">教练</a>
+					</li>
+					<li>
+						<a href="../doctor/doctor_index.html">医生</a>
+					</li>
+					<li>
+						<a href="../user/ordinary/info.html">雷莳芳</a>
+					</li>
+				</ul>
+				<ul class="side-nav" id="mobile-demo">
+					<li>
+						<a href="../index.html">首页</a>
+					</li>
+					<li class="active">
+						<a href="body_data.html">健康管理</a>
+					</li>
+					<li>
+						<a href="../activity/activity_index.html">活动</a>
+					</li>
+					<li>
+						<a href="../coach/coach_index.html">教练</a>
+					</li>
+					<li>
+						<a href="../doctor/doctor_index.html">医生</a>
+					</li>
+					<li>
+						<a href="../user/ordinary/info.html">雷莳芳</a>
+					</li>
+				</ul>
+			</div>
+		</nav>
+	</header>
+
+	<main class="container">
+		<div class="row">
+
+			<aside class="col s12 l3">
+				<h4>健康管理</h4>
+				<div class="collection">
+					<a href="body_data.html" class="collection-item active">身体数据</a>
+					<a href="sport_data.html" class="collection-item">运动数据</a>
+					<a href="sleep_data.html" class="collection-item">睡眠分析</a>
+					<a href="history_data.html" class="collection-item">历史数据</a>
+				</div>
+			</aside>
+			<div class="col s12 l9">
+				<section class="health-item">
+					<h4>身高体重</h4>
+					<form id="height-weight">
+						<div class="row">
+							<div class="input-field col s12 l6 m6">
+								<input class="validate" id="height" name="height" type="text" value="156">
+								<label for="height">身高（cm）</label>
+							</div>
+							<div class="input-field col s12 l6 m6">
+								<input class="validate" id="weight" name="weight" type="text" value="52">
+								<label for="height">体重（kg）</label>
+							</div>
+						</div>
+					</form>
+					<p>
+						你的BMI值为
+						<span id="BMI">21.4</span>
+					</p>
+					<label for="weight-chart">体重变化</label>
+					<canvas id="weight-chart" height="450" width="600"></canvas>
+				</section>
+				<section class="health-item">
+					<h4>三围</h4>
+					<form id="BWH">
+						<div class="row">
+							<div class="input-field col s12 l4 m4">
+								<input class="validate" id="bust" name="bust" type="text" value="90">
+								<label for="bust">胸围（cm）</label>
+							</div>
+							<div class="input-field col s12 l4 m4">
+								<input class="validate" id="waist" name="waist" type="text" value="72">
+								<label for="waist">腰围（kg）</label>
+							</div>
+							<div class="input-field col s12 l4 m4">
+								<input class="validate" id="hip" name="hip" type="text" value="90">
+								<label for="hip">臀围（kg）</label>
+							</div>
+						</div>
+					</form>
+					<label for="BWH-chart">三围变化</label>
+					<canvas id="BWH-chart" height="450" width="600"></canvas>
+				</section>
+				<section class="health-item">
+					<h4>心率血压</h4>
+					<form id="heart-rate">
+						<div class="row">
+							<div class="input-field col s12 l6 m6">
+								<input class="validate" id="heart-rate" name="heart-rate" type="text" value="80" active="active">
+								<label for="heart-rate" data-success="正常">心率</label>
+							</div>
+							<div class="input-field col s12 l3 m3">
+								<input class="validate" id="systolic" name="systolic" type="text" value="120">
+								<label for="systolic" data-success="正常">收缩压</label>
+							</div>
+							<div class="input-field col s12 l3 m3">
+								<input id="diastolic" name="diastolic" type="text" value="80">
+								<label for="diastolic" data-success="正常">舒张压</label>
+							</div>
+						</div>
+					</form>
+					<label for="heart-rate-chart">心率变化</label>
+					<canvas id="heart-rate-chart" height="450" width="600"></canvas>
+					<label for="blood-pressure-chart">血压变化</label>
+					<canvas id="blood-pressure-chart" height="450" width="600"></canvas>
+				</section>
+			</div>
+
+		</div>
+	</main>
+
+	<footer class="page-footer">
+		<div class="footer-copyright">
+			<div class="container">
+				© 2014 Copyright Text
+				<a class="grey-text text-lighten-4 right" href="#!">More Links</a>
+			</div>
+		</div>
+	</footer>
+
+	    <script src="../js/Chart.js"></script>
+
+	<script>
+		var weightData = {
+			labels : ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15"],
+			datasets : [
+				{
+					label: "体重",
+					fillColor : "rgba(1,187,205,0.2)",
+					strokeColor : "rgba(151,187,205,1)",
+					pointColor : "rgba(151,187,205,1)",
+					pointStrokeColor : "#fff",
+					pointHighlightFill : "#fff",
+					pointHighlightStroke : "rgba(151,187,205,1)",
+					data : [52,51.2,50,50.2,49.5,49.7,49.4,49.2,49,48.7,48.5,48.2,48,47.5,47.1]
+				},
+				{
+					label: "标准",
+					fillColor : "rgba(0,0,0,0)",
+					strokeColor : "rgba(14,145,231,0.5)",
+					pointColor : "rgba(0,0,0,0)",
+					pointStrokeColor : "rgba(0,0,0,0)",
+					pointHighlightFill : "rgba(0,0,0,0)",
+					pointHighlightStroke : "rgba(0,0,0,0)",
+					data : [45,45,45,45,45,45,45,45,45,45,45,45,45,45,45]
+				}
+			]
+
+		}
+
+		var BWHData = {
+			labels : ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15"],
+
+			datasets : [
+				{
+					label: "胸围",
+					fillColor : "rgba(1,187,205,0.2)",
+					strokeColor : "rgba(151,187,205,1)",
+					pointColor : "rgba(151,187,205,1)",
+					pointStrokeColor : "#fff",
+					pointHighlightFill : "#fff",
+					pointHighlightStroke : "rgba(151,187,205,1)",
+					data : [90,91,92,91,90,88,85,86,87,86,85,87,86,88,88]
+				},
+				{
+					label: "腰围",
+					fillColor : "rgba(11,187,205,0.2)",
+					strokeColor : "rgba(151,187,205,1)",
+					pointColor : "rgba(151,187,205,1)",
+					pointStrokeColor : "#fff",
+					pointHighlightFill : "#fff",
+					pointHighlightStroke : "rgba(151,187,205,1)",
+					data : [74,75,75,73,72,71,73,71,69,67,67,65,62,61,60]
+				},
+				{
+					label: "臀围",
+					fillColor : "rgba(151,187,205,0.2)",
+					strokeColor : "rgba(151,187,205,1)",
+					pointColor : "rgba(151,187,205,1)",
+					pointStrokeColor : "#fff",
+					pointHighlightFill : "#fff",
+					pointHighlightStroke : "rgba(151,187,205,1)",
+					data : [92,92,94,94,93,92,93,91,90,90,89,89,89,90,90]
+				}
+			]
+
+		}
+
+		var heartRateData = {
+			labels : ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15"],
+			datasets : [
+				{
+					label: "心率",
+					fillColor : "rgba(151,187,205,0.2)",
+					strokeColor : "rgba(151,187,205,1)",
+					pointColor : "rgba(151,187,205,1)",
+					pointStrokeColor : "#fff",
+					pointHighlightFill : "#fff",
+					pointHighlightStroke : "rgba(151,187,205,1)",
+					data : [90,87,85,82,80,80,82,80,78,76,75,74,72,70,70]
+				}
+			]
+		}
+
+		var bloodPressureData = {
+			labels : ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15"],
+			datasets : [
+				{
+					label: "收缩压",
+					fillColor : "rgba(151,187,205,0.2)",
+					strokeColor : "rgba(151,187,205,1)",
+					pointColor : "rgba(151,187,205,1)",
+					pointStrokeColor : "#fff",
+					pointHighlightFill : "#fff",
+					pointHighlightStroke : "rgba(151,187,205,1)",
+					data : [130,131,128,127,125,123,123,125,127,124,122,121,120,119,117]
+				},
+				{
+					label: "舒张压",
+					fillColor : "rgba(151,187,205,0.2)",
+					strokeColor : "rgba(151,187,205,1)",
+					pointColor : "rgba(151,187,205,1)",
+					pointStrokeColor : "#fff",
+					pointHighlightFill : "#fff",
+					pointHighlightStroke : "rgba(151,187,205,1)",
+					data : [90,92,89,87,86,84,84,82,80,78,76,75,74,72,72]
+				}
+			]
+		}
+		
+	window.onload = function(){
+		var ctx1 = document.getElementById("weight-chart").getContext("2d");
+		window.myLine = new Chart(ctx1).Line(weightData, {
+			scaleOverride :true , //是否用硬编码重写y轴网格线 
+			scaleSteps : 20,//y轴刻度的个数
+			scaleStepWidth : 5, //y轴每个刻度的宽度
+			scaleStartValue : 0,//y轴的起始值
+			responsive: true
+		});
+
+		var ctx2 = document.getElementById("BWH-chart").getContext("2d");
+		window.myLine = new Chart(ctx2).Line(BWHData,{
+			scaleOverride :true , //是否用硬编码重写y轴网格线 
+			scaleSteps : 20,//y轴刻度的个数
+			scaleStepWidth : 5, //y轴每个刻度的宽度
+			scaleStartValue : 0,//y轴的起始值
+			responsive: true			
+		});
+
+		var ctx3 = document.getElementById("heart-rate-chart").getContext("2d");
+		window.myLine = new Chart(ctx3).Line(heartRateData,{
+			scaleOverride :true , //是否用硬编码重写y轴网格线 
+			scaleSteps : 12,//y轴刻度的个数
+			scaleStepWidth : 10, //y轴每个刻度的宽度
+			scaleStartValue : 0,//y轴的起始值
+			responsive: true
+		})
+
+		var ctx4 = document.getElementById("blood-pressure-chart").getContext("2d");
+		window.myLine = new Chart(ctx4).Line(bloodPressureData,{
+			scaleOverride :true , //是否用硬编码重写y轴网格线 
+			scaleSteps : 18,//y轴刻度的个数
+			scaleStepWidth : 10, //y轴每个刻度的宽度
+			scaleStartValue : 0,//y轴的起始值
+			responsive: true
+		})
+
+	}
+	
+	</script>
+
+	<!--JavaScript-->
+	<script src="../js/jquery-1.11.3.min.js"></script>
+	<script src="../js/materialize.js"></script>
+
+</body>
+</html>

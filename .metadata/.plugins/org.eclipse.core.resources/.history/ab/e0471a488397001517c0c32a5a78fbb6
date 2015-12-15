@@ -1,0 +1,20 @@
+<?php
+		//"name="+newname+"&gender="+newgender+"&birthmonth="+newmonth+"&birthday="+newday
+// 						+"&interest="+newinterest+"&location="+newlocation+"&motto="+newmotto
+		session_start();
+		$name=$_POST["name"];
+		$gender=$_POST["gender"];
+		$birthmonth=$_POST["birthmonth"];
+		$birthday=$_POST["birthday"];
+		$interest=$_POST["interest"];
+		$location=$_POST["location"];
+		$motto=$_POST["motto"];
+		
+		include 'db.php';
+		$sql="update User set name='".$name."',gender='".$gender."',birthmonth='".$birthmonth."',birthday='".$birthday."'
+				,interest='".$interest."',location='".$location."'motto='".$motto."', where name=".$_SESSION['name'].";";
+		$db->exec($sql);
+		$arr = array('message' =>"save success");
+		exit(json_encode($arr));
+		
+?>

@@ -1,0 +1,135 @@
+<?php
+	include 'db.php';
+// 	$type=$_POST['type'];
+// 	$uid=$_POST['uid'];
+// 	$year=$_POST['year'];
+// 	$month=$_POST['month'];
+	$type='sleep';
+	$uid=6;
+	$year=2015;
+	$month=12;
+	$arr=array();
+	$arr1=array();
+	if($type=='distance'){
+		$sql="select * from distance where year=$year and month=$month and uid=$uid order by day;";
+		$ret = $db->query($sql);
+		$i=1;
+		if($ret)
+			while ($row = $ret->fetchArray(SQLITE3_ASSOC)) {
+				$day=$row['day'];
+				$mile=$row['mile'];
+				while ($i<$day){
+					$i++;
+					
+					$arr[]=0;
+				}
+				$arr[]=$mile;
+				$i++;
+			}
+		while($i<32){
+			$arr[]=0;
+			$i++;
+		}
+		$arr = array('type' =>$type,'data' =>$arr);
+		exit(json_encode($arr));
+	}else if($type=='step'){
+		$sql="select * from step where year=$year and month=$month and uid=$uid order by day;";
+		$ret = $db->query($sql);
+		$i=1;
+		if($ret)
+			while ($row = $ret->fetchArray(SQLITE3_ASSOC)) {
+				$day=$row['day'];
+				$mile=$row['steps'];
+				while ($i<$day){
+					$i++;
+						
+					$arr[]=0;
+				}
+				$arr[]=$mile;
+				$i++;
+			}
+		while($i<32){
+			$arr[]=0;
+			$i++;
+		}
+		$arr = array('type' =>$type,'data' =>$arr);
+		exit(json_encode($arr));
+	}else if ($type=='heartrate'){
+		$day=$_POST['day'];
+// 		$day=2;
+		$sql="select * from heartrate where year=$year and month=$month and day=$day and uid=$uid order by hour;";
+		$ret = $db->query($sql);
+		$i=0;
+		if($ret)
+			while ($row = $ret->fetchArray(SQLITE3_ASSOC)) {
+				$hour=$row['hour'];
+				$max=$row['max'];
+				$min=$row['min'];
+				while ($i<$hour){
+					$i++;
+					$arr[]=0;
+					$arr1[]=0;
+				}
+				$arr[]=$max;
+				$arr1[]=$min;
+				$i++;
+			}
+		while($i<25){
+			$arr[]=0;
+			$arr1[]=0;
+			$i++;
+		}
+		$arr = array('type' =>$type,'data1' =>$arr,'data2'=>$arr1);
+		exit(json_encode($arr));
+	}else if($type=='bloodpressure'){
+// 		$day=$_POST['day'];
+ 		$day=2;
+		$sql="select * from bloodpressure where year=$year and month=$month and day=$day and uid=$uid order by hour;";
+		$ret = $db->query($sql);
+		$i=0;
+		if($ret)
+			while ($row = $ret->fetchArray(SQLITE3_ASSOC)) {
+				$hour=$row['hour'];
+				$max=$row['max'];
+				$min=$row['min'];
+				while ($i<$hour){
+					$i++;
+					$arr[]=0;
+					$arr1[]=0;
+				}
+				$arr[]=$max;
+				$arr1[]=$min;
+				$i++;
+			}
+		while($i<25){
+			$arr[]=0;
+			$arr1[]=0;
+			$i++;
+		}
+		$arr = array('type' =>$type,'data1' =>$arr,'data2'=>$arr1);
+		exit(json_encode($arr));
+	}else if($type=='sleep'){
+		//$day=$_POST['day'];
+		$day=2;
+		$sql="select * from sleep where year=$year and month=$month and day=$day and uid=$uid;";
+// 		echo $sql;
+		$ret = $db->query($sql);
+		$dsNum=0;
+		$lsNum=0;
+		$start=0;
+		$stop=0;
+		if($ret)
+			while ($row = $ret->fetchArray(SQLITE3_ASSOC)) {
+				$dsNum=$row['dsNum'];
+				$lsNum=$row['lsNum'];
+				$start=$row['start'];
+				$stop=$row['stop'];
+			}
+		$one=strtotime($stop);
+		$two=strtotime($start);
+		$cle = $two - $one;
+		$total=$cle/60;
+		$arr = array('type' =>$type,'dsNum' =>$dsNum,'lsNum'=>$lsNum,'total'=>$total);
+		exit(json_encode($arr));
+	}
+	

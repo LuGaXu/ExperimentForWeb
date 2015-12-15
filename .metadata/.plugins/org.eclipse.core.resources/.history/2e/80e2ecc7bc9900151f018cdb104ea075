@@ -1,0 +1,234 @@
+<?php
+		require 'base.php';
+		include 'db.php';
+		session_start();
+		$id=$_SESSION['id'];
+	?>
+	 <div class="container">
+    	<div class="row" >
+    		<div class="col-md-4" style="height:300px;">
+             <!--nav-pill begin-->
+            <div id="pill">
+            	<ul class="nav nav-pills nav-stacked">
+    			<h3>健康管理</h3>
+                <li role="presentation"><a href="exercise.php">我的运动</a></li>
+                <li role="presentation" class="active"><a href="exercise_sleep.php">睡眠质量</a></li>
+                <li role="presentation"><a href="exercise_health.php">身体健康</a></li>
+			</ul>
+            </div>
+             <!--nav-pill end-->
+            </div>
+     		<div class="col-md-8" style="" id="content">
+            	<div id="date">
+                	<p>
+                	<select name="year" id="yearId"  onChange="updateDay()">
+                    	<option value="2015" selected>2015</option>
+                        <option value="2014">2014</option>
+                        <option value="2013">2013</option>
+                        <option value="2012">2012</option>
+                        <option value="2011">2011</option>
+                        <option value="2010">2010</option>
+                    </select>
+                    年
+                    <select name="month" id="monthId" onChange="updateDay()">
+                    	<option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                    </select>月
+                    <select name="day" id="dayId">
+                        
+                    </select>日 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input class="btn btn-primary" id="btn" type="submit" value="查看当日睡眠状况"></p>
+                </div>
+                <!--
+                <div id="data">
+                	<img style="padding-top:100px;" src="picture/warn.png" class="img-responsive center-block" alt="暂无数据"/>
+                </div>-->
+                <canvas style="margin-top:50px;" id="myChart" height="450" width="450"></canvas>
+            </div>
+    	</div>
+ 	</div>
+	 <script>
+	 
+	 	$("#btn").click(function(){
+	 		var year=$("#yearId").find("option:selected").text();
+			var month=$("#monthId").find("option:selected").text();
+			var day=$("#dayId").find("option:selected").text();
+			drawPicture(year,month,day);
+		});
+		function drawPicture(year,month,day){
+			var arr=getArray(year,month,day);
+			var pieData = [
+							{
+								value: arr[0],
+								color:"#F38630",
+								text: "熟睡"
+							},
+							{
+								value : arr[1],
+								color : "#E0E4CC",
+								text: "浅睡"
+							},
+							{
+								value : arr[2]-arr[1]-arr[0],
+								color : "#69D2E7",
+								text: "唤醒"
+							}
+						
+						];
+
+				var myPie = new Chart(document.getElementById("myChart").getContext("2d")).Pie(pieData);
+		}
+		function getArray(year,month,day){
+			var data;
+			var xmlHttp=GetXmlHttpObject();
+
+			if (xmlHttp==null){
+		 		alert ("Browser does not support HTTP Request")
+		 		return
+		 	}
+		 	var arr=[];
+		 	xmlHttp.onreadystatechange = function(){
+		 		if (xmlHttp.readyState==4 || xmlHttp.readyState=="complete") {
+					
+					if (xmlHttp.status == 200) {
+						data=xmlHttp.responseText;
+						//alert(data);
+						data=$.parseJSON(data);
+						var type=data.type;
+						arr.push(data.dsNum);
+						arr.push(data.lsNum);
+						arr.push(data.total);
+						//arr=arr.split(",");
+						//alert(typeof(arr));
+					//window.location.href="advice.php";
+						return arr;
+					}
+				}
+		 	}
+			xmlHttp.open("POST", "getExerciseData.php", false);
+			xmlHttp.setRequestHeader("Content-Type",
+					"application/x-www-form-urlencoded");
+// 			type='distance';
+			xmlHttp.send("type=sleep&uid="+<?php echo $id?>+"&year="+year+"&month="+month+"&day="+day);
+			return arr;
+		}
+		var xmlHttp=null;
+		function GetXmlHttpObject(){
+			xmlHttp=null;
+			try{
+			// Firefox, Opera 8.0+, Safari
+				xmlHttp=new XMLHttpRequest();
+			}catch (e){
+			// Internet Explorer
+				try{
+					xmlHttp=new ActiveXObject("Msxml2.XMLHTTP");
+				}catch (e){
+					xmlHttp=new ActiveXObject("Microsoft.XMLHTTP");
+				}
+			}
+			return xmlHttp;
+		}
+	 	window.onload=function(){
+	 		drawPicture(2015,12,2);
+			 $("#tag2").hover(function(){
+		     	$("#tag2").addClass("active");
+			 });
+			 $("#tag2").mouseleave(function(){
+					  $("#tag2").removeClass("active");
+				 });
+			$("#tag3").hover(function(){
+					 $("#tag3").addClass("active");
+				 });
+			 $("#tag3").mouseleave(function(){
+					  $("#tag3").removeClass("active");
+				 });
+			$("#tag4").hover(function(){
+					 $("#tag4").addClass("active");
+				 });
+			 $("#tag4").mouseleave(function(){
+					  $("#tag4").removeClass("active");
+				 });
+			$("#tag5").hover(function(){
+					 $("#tag5").addClass("active");
+				 });
+			 $("#tag5").mouseleave(function(){
+					  $("#tag5").removeClass("active");
+				 });
+			 var date=new Date();
+				$("#monthId").val(date.getMonth()+1);
+				updateDay();
+				$("#dayId").val(date.getDate());
+			
+				}
+		
+		
+			function updateDay(){
+				var year=jQuery("#yearId").val();
+				var month=jQuery("#monthId").val();
+				jQuery("#dayId").empty();
+				var day;
+				switch(month){
+				case "1":
+					day=31;
+					break;
+				case "2":
+					if(year%4==0&&year%100!=0||year%400==0){
+						day=29;
+					}else{
+						day=28;	
+					}
+					break;
+				case "3":
+					day=31;
+					break;	
+				case "4":
+					day=30;
+					break;
+				case "5":
+					day=31;
+					break;
+				case "6":
+					day=30;
+					break;
+				case "7":
+					day=31;
+					break;
+				case "8":
+					day=31;
+					break;
+				case "9":
+					day=30;
+					break;
+				case "10":
+					day=31;
+					break;
+				case "11":
+					day=30;
+					break;
+				case "12":
+					day=31;
+					break;
+				default:
+					day=0;
+				}
+			
+				for(var j=0;j<day;j++){
+					jQuery("#dayId").append("<option value=\""+(j+1)+"\">"+(j+1)+"</option>")	
+				}
+			}
+
+    </script>
+    
+</body>
+</html>
+	

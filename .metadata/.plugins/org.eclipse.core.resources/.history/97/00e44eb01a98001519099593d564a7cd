@@ -1,0 +1,176 @@
+	<?php 
+    	require 'base.php';
+    ?>
+      
+    <div class="container">
+    	<div class="row" >
+    		<div class="col-md-4" style="height:300px;">
+             <!--nav-pill begin-->
+            <div id="pill">
+            	<ul class="nav nav-pills nav-stacked">
+    			<h3>个人设置</h3> 		
+  				<li role="presentation"><a href="setting.php">基本资料</a></li>
+        		<li role="presentation"><a href="../../View/setting_password.html">修改密码</a></li>
+  				<li role="presentation" class="active"><a href="setting_right.php">修改权限</a></li>
+			</ul>
+            </div>
+             <!--nav-pill end-->
+            </div>
+     		<div class="col-md-8" style="" id="content">
+            	<div  style="margin-top:50px;">
+                    <div class="col-sm-4">
+                        <select class="form-control" id="usertype" name="type">
+                        	<option value="">所有用户</option>
+                            <option value="">普通用户</option>
+                            <option value="">医生</option>
+                            <option value="">教练</option>
+                        </select>	
+                     </div>
+                    <button type="button" id="btn1" name="typebtn" class="btn btn-primary col-sm-1">确定</button>	
+                    <form  role="search">
+        				<div class="form-group col-sm-4 col-sm-offset-1">
+         					 <input type="text" id="input2" class="form-control" placeholder="用户名或邮箱">
+       					 </div>
+        				<button type="submit" id="btn2" class="btn btn-success  col-sm-2">查找</button>
+     				 </form>
+    		  </div>	
+     	  	  <div style="padding-top:100px; text-align:center">  
+             	<table class="table table-hover">
+                    	<tr class="danger"> 
+                        	<td><strong>权限</strong></td>
+                            <td><strong>用户名</strong></td>
+                            <td><strong>邮箱</strong></td>
+                            <td><strong>编辑</strong></td>
+                        </tr>
+                        <?php 
+                        	include 'db.php';
+                        	$sql="select * from User where type<>'系统管理员' order by name;";
+                        	$ret = $db->query($sql);
+                        	if($ret)
+                        		while ($row = $ret->fetchArray(SQLITE3_ASSOC)) {
+                        			$type=$row['type'];
+                        			$name=$row['name'];
+                        			$email=$row['email'];
+                        			$uid=$row['id'];
+                        ?>
+                        	<tr>
+                            <td><?php echo $type?></td>
+                            <td><?php echo $name?></td>
+                            <td><?php echo $email?></td>
+                            <td><div onClick="openModal('<?php echo $type?>','<?php echo $name?>','<?php echo $email?>')"><span class="glyphicon glyphicon-pencil"></span></div></td>
+                        	</tr>
+                        <?php
+                        	}
+                        ?>
+                    </table>	  		 
+              </div>
+             
+           </div>
+    	</div>
+ 	</div>
+    
+     <!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="margin-top:70px;">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel" style="font-size:2em;font-family:'宋体', '微软雅黑', '新宋体'"><strong>修改权限</strong></h4>
+      </div>
+      <div class="modal-body"  id="modalbody">
+      	<div class="form-group">
+             <label class="col-sm-4 control-label">用户名</label>
+             <div class="col-sm-6">
+                <input id="hostname" size="16" type="text" value=" " readonly class="form-control">
+             </div>
+             <div class="col-sm-2"></div>
+         </div>
+         <div class="form-group">           
+             <label style="margin-top:30px;" class="col-sm-4 control-label">邮箱</label>
+             <div style="margin-top:30px;" class="col-sm-6">
+                <input size="16" id="hostemail" type="text" value="" readonly class="form-control">
+             </div>
+             <div class="col-sm-2"></div>
+         </div>
+         <div class="form-group">
+         	<label style="margin-top:30px;" class="col-sm-4 control-label">权限</label>
+             <div style="margin-top:30px;" class="col-sm-6">
+                <select id="hosttype" class="form-control">
+                	<option value="user">普通用户</option>
+                    <option value="doctor">医生</option>
+                    <option value="teacher">教练</option>
+                    <option value="admin">系统管理员</option>
+                </select>
+             </div>
+         </div>
+         
+      </div>
+      <div class="modal-footer" style="padding-right:100px;">
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        <button type="button" class="btn btn-primary" id="commit">确认</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+	var currentType;
+	$("#commit").click(function(){
+		var type=$("#hosttype").find("option:selected").text();
+		if(type==currentType){
+			window.location.href="setting_right.php";
+		}
+	});
+	$("#btn1").click(function(){
+		var usertype=$("#usertype").find("option:selected").text();
+	});
+	$("#btn2").click(function(){
+		var info=$("#input2").val();
+				
+	});
+   $(document).ready(function() {
+	   $("#tag1").hover(function(){
+		     $("#tag1").addClass("active");
+		 });
+	 $("#tag1").mouseleave(function(){
+		 	  $("#tag1").removeClass("active");
+		 });
+    $("#tag2").hover(function(){
+		     $("#tag2").addClass("active");
+		 });
+	 $("#tag2").mouseleave(function(){
+		 	  $("#tag2").removeClass("active");
+		 });
+	$("#tag3").hover(function(){
+		     $("#tag3").addClass("active");
+		 });
+	 $("#tag3").mouseleave(function(){
+		 	  $("#tag3").removeClass("active");
+		 });
+	$("#tag4").hover(function(){
+		     $("#tag4").addClass("active");
+		 });
+	 $("#tag4").mouseleave(function(){
+		 	  $("#tag4").removeClass("active");
+		 });
+});
+ function openModal(type,name,mail){
+	$("#myModal").modal();
+	$("#hostname").val(name);
+	$("#hostemail").val(mail);
+	var group=document.getElementById('hosttype').options;
+	var truth=false;
+	for(var i=0;i<group.length;i++){
+		if(group[i].innerHTML==type){
+			group[i].selected=true;
+			truth=true;
+			currentType=type;
+			break;
+		}	
+	}
+	if(!truth){
+		alert('error type');	
+	}
+ }
+</script>
+</body>
+</html>

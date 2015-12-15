@@ -1,0 +1,115 @@
+<?php 
+		require 'base.php';
+	?>
+    
+    <div class="container">
+    	<div class="row" >
+    		<div class="col-md-4" style="height:300px;">
+             <!--nav-pill begin-->
+            <div id="pill">
+            	<ul class="nav nav-pills nav-stacked">
+    			<h3>活动管理</h3>
+  		
+                <li role="presentation"><a href="activity.php">参与活动</a></li>
+                <li role="presentation"  class="active"><a href="activity_mine.php">我的活动</a></li>
+                <li role="presentation" class="pillElement"><a href="acitivity_publish.php">发布活动</a></li>
+			</ul>
+            </div>
+             <!--nav-pill end-->
+            </div>
+     		<div class="col-md-8" id="content" style="top:100px;">
+            	<!--活动内容-->
+     			<?php 
+	     			session_start();
+	     			include 'db.php';
+	     			$name=$_SESSION['name'];
+	     			$uid=$_SESSION['id'];
+	     			
+	     			$sql="select * from activity where id in(select aid from activity_member where uid=$uid) order by stop desc;";
+	     			$ret = $db->query($sql);
+	     			if($ret){
+	     				while ($row = $ret->fetchArray(SQLITE3_ASSOC)) {
+	     					$id=$row['id'];
+	     					$start=$row['start'];
+	     					$startdate=explode(' ', $start)[0];
+	     					$stop=$row['stop'];
+	     					$target=$row['target'];
+	     					$theme=$row['theme'];
+	     					$zero1=strtotime (date("y-m-d h:i:s")); //当前时间
+	     					$zero2=strtotime ($stop);
+	     					if($zero1>=$zero2)
+	     						continue;
+	     					?>
+	     				   <div class="activity" onClick="activityInfo(<?php echo $id ?>)">
+	     					  <div class="theme">
+	     					       <!--10个字，20byte-->
+	     					       <p><?php echo $theme?></p>
+	     					   </div>
+	     					   <div class="num">
+	     					       <br/>
+	     					       <p>参与人数</p>
+	     					       <p style="font-size:2em">
+	     					       <?php 
+	     					         $sql1="select count(*) from activity_member where aid=".$id.";";
+	     					         $ret1 = $db->query($sql1);
+	     					         $num=0;
+	     					         while ($row1 = $ret1->fetchArray(SQLITE3_ASSOC)) {
+	     					               $num=$row1['count(*)'];
+	     					         }
+	     					         echo $num;
+	     					         ?>
+	     					      </p>
+	     					   </div>
+	     					   <div class="start">
+	     					        <br/>
+	     					        <p>开始时间</p>
+	     					        <p style="font-size:1.6em"><?php echo  $startdate?></p>
+	     					   </div>
+	     					   <div class="target">
+	     					        <br/>
+	     					        <p>目标</p>
+	     					        <p style="font-size:1.5em"><?php echo $target?></p>
+	     					   </div> 
+	     					</div>  
+	     		<?php    					
+	     				}
+	     			}
+	     		?>
+                <!--活动结束-->
+            </div>
+    	</div>
+ 	</div>
+</body>
+<script type="text/javascript">
+$(document).ready(function() {
+	   $("#tag1").hover(function(){
+		     $("#tag1").addClass("active");
+		 });
+	 $("#tag1").mouseleave(function(){
+		 	  $("#tag1").removeClass("active");
+		 });
+ 
+	$("#tag3").hover(function(){
+		     $("#tag3").addClass("active");
+		 });
+	 $("#tag3").mouseleave(function(){
+		 	  $("#tag3").removeClass("active");
+		 });
+	$("#tag4").hover(function(){
+		     $("#tag4").addClass("active");
+		 });
+	 $("#tag4").mouseleave(function(){
+		 	  $("#tag4").removeClass("active");
+		 });
+	$("#tag5").hover(function(){
+		     $("#tag5").addClass("active");
+		 });
+	 $("#tag5").mouseleave(function(){
+		 	  $("#tag5").removeClass("active");
+		 });
+});
+	function activityInfo(id){
+		   window.location.href="activity_participation.php?id="+id;
+	}
+</script>
+</html>

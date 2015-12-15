@@ -1,0 +1,22 @@
+<?php
+		//"fromId="+did+"&toId="+currentFromId+"&mid="+mid+"&reply="+reply
+		include 'db.php';
+		$fromId=$_POST['fromId'];
+		$toId=$_POST['toId'];
+		$mid=$_POST['mid'];
+		$reply=$_POST['reply'];
+		
+		$sql="insert into reply (fromId,toId,mid,reply) values($fromId,$toId,$mid,'".$text."');";
+		// 		echo $sql;
+		$db->exec($sql);
+		$sql="select id from reply where fromId=$fromId and toId=$toId and mid=$mid;";
+		$ret = $db->query($sql);
+		$replyid;
+		while ($row = $ret->fetchArray(SQLITE3_ASSOC)) {
+			$replyid=$row['id'];
+		}
+		$sql="update message set reply=$replyid where id=$mid";
+		$arr = array('message' =>"send success");
+		//$arr = array('message' =>$sql);
+		exit(json_encode($arr));
+?>

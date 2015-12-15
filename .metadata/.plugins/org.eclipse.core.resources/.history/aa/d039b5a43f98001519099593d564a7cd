@@ -1,0 +1,14 @@
+<?php
+		//"uid="+uid+"&did="+did+"&gender="+gender+"&age="+age+"&text="+text
+		$from=$_POST['uid'];
+		$to=$_POST['did'];
+		$gender=$_POST['gender'];
+		$age=$_POST['age'];
+		$text=$_POST['text'];
+		
+		include 'db.php';
+		$sql="insert into message (from,to,gender,age,text) values($from,$to,'$gender',$age,'$text')";
+		$db->exec($sql);
+		$arr = array('message' =>"send success");
+		exit(json_encode($arr));
+?>

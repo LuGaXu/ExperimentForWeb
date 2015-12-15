@@ -1,0 +1,254 @@
+	<?php 
+    	require 'base.php';
+    ?>
+      
+    <div class="container">
+    	<div class="row" >
+    		<div class="col-md-4" style="height:300px;">
+             <!--nav-pill begin-->
+            <div id="pill">
+            	<ul class="nav nav-pills nav-stacked">
+    			<h3>个人设置</h3> 		
+  				<li role="presentation"><a href="setting.php">基本资料</a></li>
+        		<li role="presentation"><a href="../../View/setting_password.html">修改密码</a></li>
+  				<li role="presentation" class="active"><a href="setting_right.php">修改权限</a></li>
+			</ul>
+            </div>
+             <!--nav-pill end-->
+            </div>
+     		<div class="col-md-8" style="" id="content">
+            	<div  style="margin-top:50px;">
+                    <div class="col-sm-4">
+                        <select class="form-control" id="usertype" name="type">
+                        	<option value="">所有用户</option>
+                            <option value="">普通用户</option>
+                            <option value="">医生</option>
+                            <option value="">教练</option>
+                        </select>	
+                     </div>
+                    <button type="button" id="btn1" name="typebtn" class="btn btn-primary col-sm-1">确定</button>	
+                    <form  role="search">
+        				<div class="form-group col-sm-4 col-sm-offset-1">
+         					 <input type="text" id="input2" class="form-control" placeholder="用户名或邮箱">
+       					 </div>
+        				<button type="submit" id="btn2" class="btn btn-success  col-sm-2">查找</button>
+     				 </form>
+    		  </div>	
+     	  	  <div style="padding-top:100px; text-align:center">  
+             	<table class="table table-hover">
+                    	<tr class="danger"> 
+                        	<td><strong>权限</strong></td>
+                            <td><strong>用户名</strong></td>
+                            <td><strong>邮箱</strong></td>
+                            <td><strong>编辑</strong></td>
+                        </tr>
+                        <?php 
+                        	include 'db.php';
+                        	$sql="select * from User where type<>'系统管理员' order by name;";
+                        	$ret = $db->query($sql);
+                        	if($ret)
+                        		while ($row = $ret->fetchArray(SQLITE3_ASSOC)) {
+                        			$type=$row['type'];
+                        			$name=$row['name'];
+                        			$email=$row['email'];
+                        			$uid=$row['id'];
+                        			$position=$row['position'];
+                        ?>
+                        	<tr>
+                            <td><?php echo $type?></td>
+                            <td><?php echo $name?></td>
+                            <td><?php echo $email?></td>
+                            <td><div onClick="openModal('<?php echo $type?>','<?php echo $name?>','<?php echo $email?>',
+                            '<?php echo $position?>')"><span class="glyphicon glyphicon-pencil"></span></div></td>
+                        	</tr>
+                        <?php
+                        	}
+                        ?>
+                    </table>	  		 
+              </div>
+             
+           </div>
+    	</div>
+ 	</div>
+    
+     <!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="margin-top:70px;">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel" style="font-size:2em;font-family:'宋体', '微软雅黑', '新宋体'"><strong>修改权限</strong></h4>
+      </div>
+      <div class="modal-body"  id="modalbody">
+      	<div class="form-group">
+             <label class="col-sm-4 control-label">用户名</label>
+             <div class="col-sm-6">
+                <input id="hostname" size="16" type="text" value=" " readonly class="form-control">
+             </div>
+             <div class="col-sm-2"></div>
+         </div>
+         <div class="form-group">           
+             <label style="margin-top:30px;" class="col-sm-4 control-label">邮箱</label>
+             <div style="margin-top:30px;" class="col-sm-6">
+                <input size="16" id="hostemail" type="text" value="" readonly class="form-control">
+             </div>
+             <div class="col-sm-2"></div>
+         </div>
+         <div class="form-group">
+         	<label style="margin-top:30px;" class="col-sm-4 control-label">权限</label>
+             <div style="margin-top:30px;" class="col-sm-6">
+                <select id="hosttype" class="form-control" onChange="updateTable()">
+                	<option value="user">普通用户</option>
+                    <option value="doctor">医生</option>
+                    <option value="teacher">教练</option>
+                    <option value="admin">系统管理员</option>
+                </select>
+             </div>
+         </div>
+          <div class="form-group" id="host">           
+             <label style="margin-top:30px;" class="col-sm-4 control-label">职位</label>
+             <div style="margin-top:30px;" class="col-sm-6">
+                <input size="16" id="hostposition" type="text" value="" class="form-control">
+             </div>
+             <div class="col-sm-2"></div>
+         </div>
+      </div>
+      <div class="modal-footer" style="padding-right:100px;">
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        <button type="button" class="btn btn-primary" id="commit">确认</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+	var currentType;
+	$("#commit").click(function(){
+		var name=$("#hostname").val();
+		var type=$("#hosttype").find("option:selected").text();
+		if(type==currentType){
+			window.location.href="setting_right.php";
+			//$("#myModal").hide();
+			return;
+		}
+		var xmlHttp=GetXmlHttpObject();
+
+		if (xmlHttp==null){
+	 		alert ("Browser does not support HTTP Request")
+	 		return
+	 	}
+	 	xmlHttp.onreadystatechange = sign_up_callback;
+		xmlHttp.open("POST", "updateRight.php", false);
+		xmlHttp.setRequestHeader("Content-Type",
+				"application/x-www-form-urlencoded");
+		xmlHttp.send("name="+name+"&type="+type);
+		
+	});
+	 var xmlHttp=null;
+		function GetXmlHttpObject(){
+			xmlHttp=null;
+			try{
+			// Firefox, Opera 8.0+, Safari
+				xmlHttp=new XMLHttpRequest();
+			}catch (e){
+			// Internet Explorer
+				try{
+					xmlHttp=new ActiveXObject("Msxml2.XMLHTTP");
+				}catch (e){
+					xmlHttp=new ActiveXObject("Microsoft.XMLHTTP");
+				}
+			}
+			return xmlHttp;
+		}
+		function sign_up_callback(){
+			if (xmlHttp.readyState==4 || xmlHttp.readyState=="complete") {
+				
+				if (xmlHttp.status == 200) {
+					var data=xmlHttp.responseText;
+					//alert(data);
+					data=$.parseJSON(data);
+					data=data.message;
+	     			//alert(data);
+					if(data=="update success"){
+						alert("修改权限成功！");			
+					}else
+						alert("发生了点小错误，请重试");
+					}//if
+				window.location.href="setting_right.php";
+				}
+			}
+	$("#btn1").click(function(){
+		var usertype=$("#usertype").find("option:selected").text();
+	});
+	$("#btn2").click(function(){
+		var info=$("#input2").val();
+				
+	});
+   $(document).ready(function() {
+	   $("#tag1").hover(function(){
+		     $("#tag1").addClass("active");
+		 });
+	 $("#tag1").mouseleave(function(){
+		 	  $("#tag1").removeClass("active");
+		 });
+    $("#tag2").hover(function(){
+		     $("#tag2").addClass("active");
+		 });
+	 $("#tag2").mouseleave(function(){
+		 	  $("#tag2").removeClass("active");
+		 });
+	$("#tag3").hover(function(){
+		     $("#tag3").addClass("active");
+		 });
+	 $("#tag3").mouseleave(function(){
+		 	  $("#tag3").removeClass("active");
+		 });
+	$("#tag4").hover(function(){
+		     $("#tag4").addClass("active");
+		 });
+	 $("#tag4").mouseleave(function(){
+		 	  $("#tag4").removeClass("active");
+		 });
+});
+
+  var lastType;
+ function openModal(type,name,mail,position){
+	$("#myModal").modal();
+	$("#hostname").val(name);
+	$("#hostemail").val(mail);
+	$("#hostposition").val(position);
+ 	if(!(type=="医生" || type=="教练")){
+ 		$("#host").hide();
+ 		$("#modalbody").css("height","200px");
+ 	}else{
+ 		$("#host").show();
+ 		$("#modalbody").css("height","250px");
+ 	}
+	var group=document.getElementById('hosttype').options;
+	var truth=false;
+	for(var i=0;i<group.length;i++){
+		if(group[i].innerHTML==type){
+			group[i].selected=true;
+			truth=true;
+			currentType=type;
+			lastType=type;
+			break;
+		}	
+	}
+	if(!truth){
+		alert('error type');	
+	}
+ }
+	 function updateTable(){
+		 var type=$("#hosttype").find("option:selected").text();
+		 if((type=='医生'||type=='教练')&&(lastType=='普通用户')){
+			 $("#modalbody").css("height","250px");
+			 $("#host").show();
+		 }else if((lastType=='医生'||lastType=='教练')&&(type=='普通用户')){
+			 $("#host").hide();
+			 $("#modalbody").css("height","200px");
+		 }
+		 lastType=type;
+	 }
+</script>
+</body>
+</html>

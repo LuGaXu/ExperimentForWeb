@@ -1,0 +1,156 @@
+	<?php 
+		require 'base.php';
+		session_start();
+		$usertype=$_SESSION['type'];
+	?>
+	  
+   <div class="container">
+    	<div class="row" >
+    		<div class="col-md-4" style="height:300px;">
+             <!--nav-pill begin-->
+            <div id="pill">
+            	<ul class="nav nav-pills nav-stacked">
+    			<h3>建议管理</h3>
+  		
+                 <li role="presentation"><a href="advice.php">提问</a></li>
+                <li role="presentation"><a href="advice_reply.php">回复<span id="writen" class="badge"></span></a></li>
+                <li role="presentation" id="special" style="display: none"><a href="advice_write.php">待回复<span id="unwrite" class="badge"></span></a></li>
+				<li role="presentation" class="active"><a href="advice_import.php">导入</a></li>
+			</ul>
+            </div>
+             <!--nav-pill end-->
+            </div>
+     		<div class="col-md-8" style="" id="content">
+            	<div class="page-header">
+     	 				<h1><span>导入建议</span></h1>
+    			 </div>
+     			<div class="content">  
+               		 <form action="upload.php" method="post" enctype="multipart/form-data">
+						  <div class="form-group">
+						    <label for="exampleInputFile">请选择要导入的xml,excel格式的文件</label>
+						    <input type="file" name="file[]" style="margin-bottom: -20px;" id="file"><br>
+<!-- 						    <input type="file" name="file[]" > -->
+						  </div>
+						  <button type="button" id="again" class="btn btn-default">继续添加</button>
+						  <button type="submit" id="btn" class="btn btn-default">Submit</button>
+					</form>
+					<table class="table table-hover" style="margin-top:20px;text-align: center">
+                    	<tr class="warning"> 
+                        	<td><strong>作者</strong></td>
+                            <td><strong>导入时间</strong></td>
+                            <td><strong>具体建议</strong></td>
+                        </tr>
+                        <?php 
+                        	include 'db.php';
+	     					$id=$_SESSION['id'];
+	     					
+	     					$sql="select * from importAdvice where uid=$id order by createAt desc;";
+	     					$ret = $db->query($sql);
+	     					$num=0;
+	     					if($ret)
+	     					while ($row = $ret->fetchArray(SQLITE3_ASSOC)) {
+	     						$aid=$row['id'];
+	     						$author=$row['author'];
+	     						$time=$row['createAt'];
+	     						$content=$row['content'];
+	                        ?>
+	                        	<tr >
+	                            <td><?php echo $author?></td>
+	                            <td><?php echo $time?></td>
+	                            <td><div onClick="showdetail(<?php echo $aid?>,'<?php echo $content?>')"><span class="glyphicon glyphicon-search"></span></div></td>
+	                        	</tr>
+	                        <?php
+	                        	}
+	                        ?>
+                    </table>	  
+                    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="margin-top:70px;">
+					  <div class="modal-dialog" role="document">
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					        <h4 class="modal-title" id="myModalLabel" style="font-size:2em;font-family:'宋体', '微软雅黑', '新宋体'"><strong>建议详情</strong></h4>
+					      </div>
+					      <div class="modal-body" style="overflow: auto;height:200px;" id="modalbody">
+					      	<div class="form-group">
+					        	
+					             <label class=" control-label">描述</label>
+					             <div >
+					                <textarea rows="5" readonly id="newstart" class=" form-control"></textarea>
+					             </div>
+					         </div>
+					      </div>
+					      <div class="modal-footer">
+					      	<button type="submit" class="btn btn-danger" id="delete" data-dismiss="modal">删除该条建议</button>
+					        <button type="button" class="btn btn-primary" data-dismiss="modal">关闭</button>
+					      </div>
+					    </div>
+					  </div>
+					</div>
+            	</div>
+            </div>
+    	</div>
+ 	</div>
+ <script type="text/javascript">
+ 		var currentId;
+//  	$("#btn").click(function(){
+// 		var f=document.getElementById("exampleInputFile").files;
+// 		alert(f[0].size);
+//  	 });
+    function showdetail(id,content){
+    	$("#myModal").modal();
+    	$("#newstart").val(content);
+    	currentId=id;
+    }
+    $("#delete").click(function(){
+    	var xmlHttp=GetXmlHttpObject();
+
+		if (xmlHttp==null){
+	 		alert ("Browser does not support HTTP Request")
+	 		return
+	 	}
+	 	xmlHttp.onreadystatechange = sign_up_callback;
+		xmlHttp.open("POST", "updateState.php", false);
+		xmlHttp.setRequestHeader("Content-Type",
+				"application/x-www-form-urlencoded");
+		xmlHttp.send("id="+currentId);
+    }
+    });
+	$("#again").click(function(){
+		var newfile=$("<input type='file' name='file[]' style='margin-bottom:20px;' >");
+		newfile.insertBefore("#again");
+	})
+		
+   $(document).ready(function() {
+	   var usertype='<?php echo $usertype?>';
+	  	if(usertype=='医生'||usertype=='教练'){
+			   $("#special").show();
+		   }
+	   $("#tag1").hover(function(){
+		     $("#tag1").addClass("active");
+		 });
+	 $("#tag1").mouseleave(function(){
+		 	  $("#tag1").removeClass("active");
+		 });
+    
+	$("#tag2").hover(function(){
+		     $("#tag2").addClass("active");
+		 });
+	 $("#tag2").mouseleave(function(){
+		 	  $("#tag2").removeClass("active");
+		 });
+	$("#tag4").hover(function(){
+		     $("#tag4").addClass("active");
+		 });
+	 $("#tag4").mouseleave(function(){
+		 	  $("#tag4").removeClass("active");
+		 });
+	$("#tag5").hover(function(){
+		     $("#tag5").addClass("active");
+		 });
+	 $("#tag5").mouseleave(function(){
+		 	  $("#tag5").removeClass("active");
+		 });
+	
+});
+</script>
+	</html>

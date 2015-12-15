@@ -1,0 +1,173 @@
+<!doctype html>
+<html class="no-js" lang="">
+<head>
+	<meta charset="utf-8"/>
+	<meta http-equiv="x-ua-compatible" content="ie=edge"/>
+	<title>Health+&nbsp;睡眠分析</title>
+	<meta name="description" content=""/>
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+	<link rel="apple-touch-icon" href="apple-touch-icon.png"/>
+	<!-- Place favicon.ico in the root directory -->
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link rel="stylesheet" href="../css/materialize.css"/>
+
+</head>
+
+<body>
+
+	<header>
+		<nav>
+			<div class="nav-wrapper">
+				<a href="#" class="brand-logo">Health+</a>
+				<a href="#" data-activates="mobile-demo" class="button-collapse"> <i class="material-icons">menu</i>
+				</a>
+				<ul id="nav-mobile" class="right hide-on-med-and-down">
+					<li>
+						<a href="../index.html">首页</a>
+					</li>
+					<li class="active">
+						<a href="body_data.html">健康管理</a>
+					</li>
+					<li>
+						<a href="../activity/activity_index.html">活动</a>
+					</li>
+					<li>
+						<a href="../coach/coach_index.html">教练</a>
+					</li>
+					<li>
+						<a href="../doctor/doctor_index.html">医生</a>
+					</li>
+					<li>
+						<a href="../user/ordinary/info.html">雷莳芳</a>
+					</li>
+				</ul>
+				<ul class="side-nav" id="mobile-demo">
+					<li>
+						<a href="../index.html">首页</a>
+					</li>
+					<li class="active">
+						<a href="body_data.html">健康管理</a>
+					</li>
+					<li>
+						<a href="../activity/activity_index.html">活动</a>
+					</li>
+					<li>
+						<a href="../coach/coach_index.html">教练</a>
+					</li>
+					<li>
+						<a href="../doctor/doctor_index.html">医生</a>
+					</li>
+					<li>
+						<a href="../user/ordinary/info.html">雷莳芳</a>
+					</li>
+				</ul>
+			</div>
+		</nav>
+	</header>
+
+	<main class="container">
+		<div class="row">
+			<aside class="col s12 l3">
+				<h4>健康管理</h4>
+				<div class="collection">
+					<a href="body_data.html" class="collection-item">身体数据</a>
+					<a href="sport_data.html" class="collection-item">运动数据</a>
+					<a href="sleep_data.html" class="collection-item active">睡眠分析</a>
+					<a href="history_data.html" class="collection-item">历史数据</a>
+				</div>
+			</aside>
+			<div class="col s12 l9">
+				<div class="row">
+					<div class="col s12 l5">
+						<label for="daily-sleep-chart">昨夜睡眠情况</label>
+						<canvas id="daily-sleep-chart" width="300" height="300"/>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col s12 l12">
+						<label for="month-sleep-chart">本月睡眠情况</label>
+						<canvas id="month-sleep-chart" width="300" height="300"/>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+
+	<footer class="page-footer">
+		<div class="footer-copyright">
+			<div class="container">
+				© 2014 Copyright Text
+				<a class="grey-text text-lighten-4 right" href="#!">More Links</a>
+			</div>
+		</div>
+	</footer>
+
+	<script src="../js/Chart.js"></script>
+
+	<script>
+		var doughnutData = [
+				{
+					value: 180,
+					color:"#01579b",
+					highlight: "#0277bd",
+					label: "深度睡眠"
+				},
+				{
+					value: 300,
+					color: "#46BFBD",
+					highlight: "#5AD3D1",
+					label: "浅睡眠"
+				},
+			];
+
+		var lineChartData = {
+			labels : ["January","February","March","April","May","June","July"],
+			datasets : [
+				{
+					label: "总睡眠时间",
+					fillColor : "rgba(220,220,220,0.2)",
+					strokeColor : "rgba(220,220,220,1)",
+					pointColor : "rgba(220,220,220,1)",
+					pointStrokeColor : "#fff",
+					pointHighlightFill : "#fff",
+					pointHighlightStroke : "rgba(220,220,220,1)",
+					data : [8,8.5,8.2,8.6,8,7.8,7.6]
+				},
+				{
+					label: "深度睡眠时间",
+					fillColor : "rgba(151,187,205,0.2)",
+					strokeColor : "rgba(151,187,205,1)",
+					pointColor : "rgba(151,187,205,1)",
+					pointStrokeColor : "#fff",
+					pointHighlightFill : "#fff",
+					pointHighlightStroke : "rgba(151,187,205,1)",
+					data : [2.5,2.8,2.7,3,2.7,2.5,2.4]
+				}
+			]
+
+		}
+
+	window.onload = function(){
+
+		var ctx = document.getElementById("daily-sleep-chart").getContext("2d");
+				window.myDoughnut = new Chart(ctx).Doughnut(doughnutData, {responsive : true});
+
+		var ctx = document.getElementById("month-sleep-chart").getContext("2d");
+		window.myLine = new Chart(ctx).Line(lineChartData, {
+			scaleOverride :true , //是否用硬编码重写y轴网格线 
+			scaleSteps : 12,//y轴刻度的个数
+			scaleStepWidth : 1, //y轴每个刻度的宽度
+			scaleStartValue : 0,//y轴的起始值
+			responsive: true
+		});
+	}
+			
+	</script>
+
+	<!--JavaScript-->
+	<script src="../js/jquery-1.11.3.min.js"></script>
+	<script src="../js/materialize.js"></script>
+
+</body>
+</html>

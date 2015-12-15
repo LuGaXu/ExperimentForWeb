@@ -1,0 +1,207 @@
+	<?php 
+		require 'base.php';
+		session_start();
+	?>
+	
+     <div class="container">
+    	<div class="row" >
+   		  <div class="col-md-4" style="height:300px;">
+             <!--nav-pill begin-->
+            <div id="pill">
+            	<ul class="nav nav-pills nav-stacked">
+    			<h3>建议管理</h3>
+  		
+                <li role="presentation" class="active"><a href="advice.php">提问</a></li>
+                <li role="presentation"><a href="advice_reply.html">回复</a></li>
+                <li role="presentation"><a href="advice_import.html">导入</a></li>
+			</ul>
+            </div>
+             <!--nav-pill end-->
+            </div>
+   		  <div class="col-md-8" style="" id="content">
+            	<div class="page-header">
+     	 				<h1><span>选择专家</span></h1>
+                        <div style="float:right;margin-top:-40px;margin-right:50px;">
+                        <form action="">
+                        	<select name="identification">
+                            	<option>医生</option>
+                                <option>教练</option>
+                            </select>
+                        </form>
+                        </div>
+   			  </div>
+              
+              <?php 
+              	$type=$_GET['type'];
+              	if($type==''){
+              		$type=='医生';
+              	}
+              	include 'db.php';
+              	$sql="select * from User where type='$type';";
+              	echo $sql;
+              	$ret = $db->query($sql);
+              	if($ret)
+              		while ($row = $ret->fetchArray(SQLITE3_ASSOC)) {
+              			$name=$row['name'];
+              			$id=$row['id'];
+              			$position=$row['position'];
+              ?>
+              	 <!--个人信息-->
+            <div class="information" >
+           	  		<div class="name">
+                    	<!--10个字，20byte-->
+                    	<p><?php echo $name?></p>
+                    	
+                    </div>
+                    <div class="major">
+                    	<?php echo $position?>
+                    </div>
+                    <div class="target">
+                    	
+                       <a href="javascript:void(0);" onClick="writeQuestion(<?php echo $id?>)">我要提问</a>
+                    </div>
+              </div>
+            <!--个人信息结束-->
+              <?php
+              		}
+              ?>
+             
+            </div>
+    	</div>
+ 	</div>
+    <script>
+    	  $(document).ready(function() {
+	   $("#tag1").hover(function(){
+		     $("#tag1").addClass("active");
+		 });
+	 $("#tag1").mouseleave(function(){
+		 	  $("#tag1").removeClass("active");
+		 });
+    
+	$("#tag2").hover(function(){
+		     $("#tag2").addClass("active");
+		 });
+	 $("#tag2").mouseleave(function(){
+		 	  $("#tag2").removeClass("active");
+		 });
+	$("#tag4").hover(function(){
+		     $("#tag4").addClass("active");
+		 });
+	 $("#tag4").mouseleave(function(){
+		 	  $("#tag4").removeClass("active");
+		 });
+	$("#tag5").hover(function(){
+		     $("#tag5").addClass("active");
+		 });
+	 $("#tag5").mouseleave(function(){
+		 	  $("#tag5").removeClass("active");
+		 });
+	});
+	function back(){
+			 window.location.href="advice.php";
+		}
+	function writeQuestion(did){
+		var str = (function(){/*
+			<div class="page-header">
+							<h1><span>填写问题</span></h1>
+							<div style="float:right;margin-top:-40px;margin-right:10px;">
+								<button type="button" class="btn btn-danger" id="return" onClick=back()><span class="glyphicon glyphicon-log-in"></span>&nbsp;取消						</button>
+								
+							</div>
+			</div>
+			<div id="sexandage">
+					<label class="control-label col-sm-2">性别</label>
+					<div   class="col-sm-2">
+					<select id="gender" class="form-control">
+						<option value="female">女</option>
+						<option value="male">男</option>
+					</select></div>
+					<label class="col-sm-offset-2 col-sm-2 ">年龄</label>
+					<div class="col-sm-2">
+					<input type="text" class="form-control col-sm-4" id="age" size="2px"/></div>
+			</div>
+			<div id="question">
+					<label class="control-label" for="input">我要咨询的问题</label>
+					<textarea id="input"  class="form-control" rows="10"></textarea>
+			</div>
+			<div id="result">
+					<input type="button" id="btn" class="btn btn-primary" value="提交" name="submit"/>
+			 </div>
+	
+	*/});
+	
+       str=str.toString().match(/\/\*!?(?:\@preserve)?[ \t]*(?:\r\n|\n)([\s\S]*?)(?:\r\n|\n)\s*\*\//);
+	   document.getElementById("content").innerHTML=str[1];
+
+	   function isdigit(s)
+	   {
+	   var r,re;
+	   re = /\d*/i; //\d表示数字,*表示匹配多个数字
+	   r = s.match(re);
+	   return (r==s)?1:0;
+	   }
+	   
+	   $("#btn").click(function(){
+		   var gender=$("#gender").find("option:selected").text();
+		   var age=$("#age").val();
+		   var text=$("#input").val();
+		   var uid=<?php echo $_SESSION['id']?>;
+
+		   if(age==''||text==''){
+				alert("内容不能为空");
+				return;
+			}
+
+		   if(!isdigit(age)){
+				alert("请输入正确的年龄");
+				$("#age").val('');
+				return;
+			}
+		   var xmlHttp=GetXmlHttpObject();
+
+			if (xmlHttp==null){
+		 		alert ("Browser does not support HTTP Request")
+		 		return
+		 	}
+		 	xmlHttp.onreadystatechange = sign_up_callback;
+			xmlHttp.open("POST", "sendMessage.php", false);
+			xmlHttp.setRequestHeader("Content-Type",
+					"application/x-www-form-urlencoded");
+			xmlHttp.send("uid="+uid+"&did="+did+"&gender="+gender+"&age="+age+"&text="+text);
+	   });	   
+	   var xmlHttp=null;
+		function GetXmlHttpObject(){
+			xmlHttp=null;
+			try{
+			// Firefox, Opera 8.0+, Safari
+				xmlHttp=new XMLHttpRequest();
+			}catch (e){
+			// Internet Explorer
+				try{
+					xmlHttp=new ActiveXObject("Msxml2.XMLHTTP");
+				}catch (e){
+					xmlHttp=new ActiveXObject("Microsoft.XMLHTTP");
+				}
+			}
+			return xmlHttp;
+		}
+		function sign_up_callback(){
+			if (xmlHttp.readyState==4 || xmlHttp.readyState=="complete") {
+				
+				if (xmlHttp.status == 200) {
+					var data=xmlHttp.responseText;
+					//alert(data);
+					data=$.parseJSON(data);
+					data=data.message;
+					if(data=="send success"){
+						alert("消息发送成功");			
+					}else
+						alert("发生了点小错误，请重试");
+					}//if
+				window.location.href="advice.php";
+				}
+			}
+	}
+    </script>
+</body>
+</html>

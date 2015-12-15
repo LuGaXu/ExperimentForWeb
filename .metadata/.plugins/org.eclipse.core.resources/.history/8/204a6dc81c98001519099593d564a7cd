@@ -1,0 +1,6 @@
+<?php
+	$name=$_POST['name'];
+	$type=$_POST['type'];
+	include 'db.php';
+	$sql="update User set type='".$type."' where name='".$name.";";
+?>

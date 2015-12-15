@@ -1,0 +1,141 @@
+	<?php 
+		require 'base.php';
+		session_start();
+		$type=$_SESSION['type'];
+	?>
+	
+	<div class="container">
+    	<div class="row" >
+    		<div class="col-md-4" style="height:300px;">
+             <!--nav-pill begin-->
+            <div id="pill">
+            	<ul class="nav nav-pills nav-stacked">
+    			<h3>建议管理</h3>
+  		
+                <li role="presentation"><a href="advice.php">提问</a></li>
+                <li role="presentation" ><a href="advice_reply.php">回复</a></li>
+                <li role="presentation" class="active"><a href="advice_write.php">待回复<span id="unwrite" class="badge"></span></a></li>
+                <li role="presentation"><a href="advice_import.html">导入</a></li>
+			</ul>
+            </div>
+             <!--nav-pill end-->
+            </div>
+     		<div class="col-md-8" id="content" style="">
+            	<div class="page-header">
+     	 				<h1><span>待回复</span></h1>
+    			 </div>
+     			<div class="content">  
+     				
+     				<table class="table table-hover" style="text-align: center">
+                    	<tr class="info"> 
+                        	<td><strong>姓名</strong></td>
+                            <td><strong>性别</strong></td>
+                            <td><strong>年龄</strong></td>
+                            <td><strong>回复</strong></td>
+                        </tr>
+                        <?php 
+                        	include 'db.php';
+     					$id=$_SESSION['id'];
+     					$sql="select count(*) from message where toId=$id and read=0";
+     					$ret = $db->query($sql);
+     					$num=0;
+     					while ($row = $ret->fetchArray(SQLITE3_ASSOC)) {
+     						$num=$row['count(*)'];
+						}
+     					$sql="select name,m.* from message m,User where toId=$id and reply=-1 and User.id=m.fromId order by reply,id;";
+     					$ret = $db->query($sql);
+     					if ($ret)
+     					while ($row = $ret->fetchArray(SQLITE3_ASSOC)) {
+     						$name=$row['name'];
+     						$gender=$row['gender'];
+     						$age=$row['age'];
+     						$text=$row['text'];
+     						$read=$row['read'];
+                        ?>
+                        	<tr <?php if($read==0) echo 'style="background-color:#ffff00"'?> >
+                            <td><?php echo $name?></td>
+                            <td><?php echo $gender?></td>
+                            <td><?php echo $age?></td>
+                            <td><div onClick="showdetail('<?php echo $name?>','<?php echo $gender?>',<?php echo $age?>,'<?php echo $text?>')"><span class="glyphicon glyphicon-pencil"></span></div></td>
+                        	</tr>
+                        <?php
+                        	}
+                        ?>
+                    </table>	  
+                	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="margin-top:70px;">
+					  <div class="modal-dialog" role="document">
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					        <h4 class="modal-title" id="myModalLabel" style="font-size:2em;font-family:'宋体', '微软雅黑', '新宋体'"><strong>问题</strong></h4>
+					      </div>
+					      <div class="modal-body"  id="modalbody">
+					      	<div class="form-group">
+					        	
+					             <label class=" control-label">描述</label>
+					             <div >
+					                <textarea  readonly class=" form-control"></textarea>
+					             </div>
+					             <div class="col-sm-2"></div>
+					         </div>
+					         <div class="form-group">           
+					             <label style="margin-top:30px;" class="col-sm-4 control-label">活动结束时间</label>
+					             <div style="margin-top:30px;" class="col-sm-6">
+					                <input size="16" type="text" value="2015-12-11 14:45" readonly id="newstop" class="form_datetime form-control">
+					             </div>
+					             <div class="col-sm-2"></div>
+					         </div>
+					        
+					      </div>
+					      <div class="modal-footer">
+					        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+					        <button type="button" class="btn btn-primary" id="submit">发布</button>
+					      </div>
+					    </div>
+					  </div>
+					</div>
+            	</div>
+            </div>
+    	</div>
+ 	</div>
+    
+</body>
+<script>
+	function showdetail(name,gender,age,text){
+		$("#myModal").modal();
+    }
+   $(document).ready(function() {
+	   var num=<?php echo $num?>;
+	   if(num>0){
+			$("#unwrite").html(num);
+		}
+	   $("#tag1").hover(function(){
+		     $("#tag1").addClass("active");
+		 });
+	 $("#tag1").mouseleave(function(){
+		 	  $("#tag1").removeClass("active");
+		 });
+    
+	$("#tag2").hover(function(){
+		     $("#tag2").addClass("active");
+		 });
+	 $("#tag2").mouseleave(function(){
+		 	  $("#tag2").removeClass("active");
+		 });
+	$("#tag4").hover(function(){
+		     $("#tag4").addClass("active");
+		 });
+	 $("#tag4").mouseleave(function(){
+		 	  $("#tag4").removeClass("active");
+		 });
+	$("#tag5").hover(function(){
+		     $("#tag5").addClass("active");
+		 });
+	 $("#tag5").mouseleave(function(){
+		 	  $("#tag5").removeClass("active");
+		 });
+	
+});
+</script>
+
+</html>

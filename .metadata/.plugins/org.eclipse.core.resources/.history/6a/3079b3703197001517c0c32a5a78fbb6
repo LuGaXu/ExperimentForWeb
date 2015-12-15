@@ -1,0 +1,8 @@
+<?php
+	$aid=$_POST["aid"];
+	include 'db.php';
+	$sql = "delete from activity where aid=".$aid.";";
+	$db->exec($sql);
+	$arr = array('message' =>"publish success");
+	exit(json_encode($arr));
+?>

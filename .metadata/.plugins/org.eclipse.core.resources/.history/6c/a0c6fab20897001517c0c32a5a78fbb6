@@ -1,0 +1,11 @@
+<?php
+	$start=$_POST["start"];
+	$stop=$_POST["stop"];
+	$target=$_POST["target"];
+	$theme=$_POST["theme"];
+	$author=$_POST["author"];
+	
+	include 'db.php';
+	$sql = "insert into activity(start,stop,target,theme,author);
+    values ('".$start."','".$stop."','".$target."','".$theme."','".$author."');";
+	$db->exec($sql);

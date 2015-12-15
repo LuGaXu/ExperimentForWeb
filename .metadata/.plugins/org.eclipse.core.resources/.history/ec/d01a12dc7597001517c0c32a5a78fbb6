@@ -1,0 +1,34 @@
+<?php
+ 	    session_start();
+	 	$name=$_POST["name"];
+	 	$password=$_POST["password"];
+// 	 	$name="sharpay";
+// 	 	$password="123456";
+	 	include 'db.php';
+	 	//$hash= password_hash($password, PASSWORD_DEFAULT);
+	 	$sql="select count(*),* from User where name='$name';";
+	 	$ret = $db->query($sql);
+	 	while ($row = $ret->fetchArray(SQLITE3_ASSOC)) {
+	 		$pass=$row['password'];
+	 		$num=$row['count(*)'];
+	 		$type=$row['type'];
+	 		$email=$row['email'];
+	 		$gender=$row['gender'];
+	 		if ($num==0){
+	 			$arr = array('message' => "login failed");
+	 			exit(json_encode($arr));
+	 		}else if(password_verify($password, $pass)){
+	 			$_SESSION['name']=$name;
+	 			$_SESSION['type']=$type;
+	 			$_SESSION['email']=$email;
+	 			$_SESSION['gender']=$gender;
+	 			
+	 			$arr = array('message' =>"login success");  
+            	exit(json_encode($arr));  
+	 		}else{
+	 			$arr = array('message' => "login failed");
+	 			exit(json_encode($arr));
+// 	 			echo  "login failed";
+	 	}
+	 }
+?>

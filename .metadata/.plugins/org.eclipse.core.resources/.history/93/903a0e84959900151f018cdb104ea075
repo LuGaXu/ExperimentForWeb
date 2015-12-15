@@ -1,0 +1,80 @@
+<?php
+	include 'db.php';
+	$type=$_POST['type'];
+	$uid=$_POST['uid'];
+	$year=$_POST['year'];
+	$month=$_POST['month'];
+// 	$type='distance';
+// 	$uid=6;
+// 	$year=2015;
+// 	$month=12;
+	$arr=array();
+	$arr1=array();
+	if($type=='distance'){
+		$sql="select * from distance where year=$year and month=$month and uid=$uid order by day;";
+		$ret = $db->query($sql);
+		$i=1;
+		if($ret)
+			while ($row = $ret->fetchArray(SQLITE3_ASSOC)) {
+				$day=$row['day'];
+				$mile=$row['mile'];
+				while ($i<$day){
+					$i++;
+					
+					$arr[]=0;
+				}
+				$arr[]=$mile;
+				$i++;
+			}
+		while($i<32){
+			$arr[]=0;
+			$i++;
+		}
+		$arr = array('type' =>$type,'data' =>$arr);
+		exit(json_encode($arr));
+	}else if($type=='step'){
+		$sql="select * from step where year=$year and month=$month and uid=$uid order by day;";
+		$ret = $db->query($sql);
+		$i=1;
+		if($ret)
+			while ($row = $ret->fetchArray(SQLITE3_ASSOC)) {
+				$day=$row['day'];
+				$mile=$row['steps'];
+				while ($i<$day){
+					$i++;
+						
+					$arr[]=0;
+				}
+				$arr[]=$mile;
+				$i++;
+			}
+		while($i<32){
+			$arr[]=0;
+			$i++;
+		}
+		$arr = array('type' =>$type,'data' =>$arr);
+		exit(json_encode($arr));
+	}else if ($type=='heartrate'){
+		$sql="select * from step where year=$year and month=$month and uid=$uid order by day;";
+		$ret = $db->query($sql);
+		$i=1;
+		if($ret)
+			while ($row = $ret->fetchArray(SQLITE3_ASSOC)) {
+				$day=$row['day'];
+				$mile=$row['steps'];
+				while ($i<$day){
+					$i++;
+		
+					$arr[]=0;
+				}
+				$arr[]=$mile;
+				$i++;
+			}
+		while($i<32){
+			$arr[]=0;
+			$i++;
+		}
+		$arr = array('type' =>$type,'data1' =>$arr,'data2'=>$arr1);
+		exit(json_encode($arr));
+	}
+	

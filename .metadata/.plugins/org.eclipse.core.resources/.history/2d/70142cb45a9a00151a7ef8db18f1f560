@@ -1,0 +1,121 @@
+<?php
+/* if ($_FILES["file"]["error"] > 0)
+  {
+  echo "Error: " . $_FILES["file"]["error"] . "<br />";
+  }
+else
+  {
+  echo "Upload: " . $_FILES["file"]["name"] . "<br />";
+  echo "Type: " . $_FILES["file"]["type"] . "<br />";
+  echo "Size: " . ($_FILES["file"]["size"] / 1024) . " Kb<br />";
+  echo "Stored in: " . $_FILES["file"]["tmp_name"];
+  } */
+  $length=sizeof($_FILES["file"]["name"]);
+  session_start();
+  $id=$_SESSION['id'];
+  require_once 'reader.php';
+  
+  include 'db.php';
+  for($m=0;$m<$length;$m++){
+  	  $path;
+	  if (file_exists("upload/" . $_FILES["file"]["name"][$m]))
+	  {
+	  	$path="F:/nju/study/web/ExperimentForWeb/upload/" . $_FILES["file"]["name"][$m];
+	  }
+	  else
+	  {
+	  	move_uploaded_file($_FILES["file"]["tmp_name"][$m],
+	  			"F:/nju/study/web/ExperimentForWeb/upload/" . $_FILES["file"]["name"][$m]);
+	  	//echo "Stored in: " . "upload/" . $_FILES["file"]["name"];
+	  	$path="F:/nju/study/web/ExperimentForWeb/upload/" . $_FILES["file"]["name"][$m];
+	  }
+	  if(strrchr($path,".xml")==".xml"){
+		  	header("content-type:text/html; charset=utf-8"); //设置编码
+		  	$doc = new DOMDocument();
+		  	$doc->load( $path);
+		  	$advices = $doc->getElementsByTagName( "advice" );
+		  	foreach( $advices as $advice )
+		  	{
+		  		$authors = $advice->getElementsByTagName( "author" );
+		  		$author = $authors->item(0)->nodeValue;
+		  	
+		  		$contents = $advice->getElementsByTagName( "content" );
+		  		$content = $contents->item(0)->nodeValue;
+		  	
+		  		$sql="insert into importAdvice(uid,author,content) values ($id,'$author','$content');";
+// 		   	    echo $sql;
+		  		$db->exec($sql);
+// 		  		echo $author."-".$content.'<br/>';
+		  	}
+		  	unset($advice); 
+	  }else if(strrchr($path,".xls")==".xls"){
+	  	require_once 'reader.php';
+	  	
+	  	
+	  	// ExcelFile($filename, $encoding);
+	  	$data = new Spreadsheet_Excel_Reader();
+	  	
+	  	
+	  	// Set output Encoding.
+	  	$data->setOutputEncoding('UTF-8');
+	  	
+	  	/***
+	  	 * if you want you can change 'iconv' to mb_convert_encoding:
+	  	 * $data->setUTFEncoder('mb');
+	  	 *
+	  	**/
+	  	
+	  	/***
+	  	 * By default rows & cols indeces start with 1
+	  	 * For change initial index use:
+	  	 * $data->setRowColOffset(0);
+	  	 *
+	  	**/
+	  	
+	  	
+	  	
+	  	/***
+	  	 *  Some function for formatting output.
+	  	 * $data->setDefaultFormat('%.2f');
+	  	 * setDefaultFormat - set format for columns with unknown formatting
+	  	 *
+	  	 * $data->setColumnFormat(4, '%.3f');
+	  	 * setColumnFormat - set format for column (apply only to number fields)
+	  	 *
+	  	**/
+	  	
+	  	$data->read('F:\nju\study\web\ExperimentForWeb\advice.xls');
+	  	
+	  	/*
+	  	
+	  	
+	  	$data->sheets[0]['numRows'] - count rows
+	  	$data->sheets[0]['numCols'] - count columns
+	  	$data->sheets[0]['cells'][$i][$j] - data from $i-row $j-column
+	  	
+	  	$data->sheets[0]['cellsInfo'][$i][$j] - extended info about cell
+	  	
+	  	$data->sheets[0]['cellsInfo'][$i][$j]['type'] = "date" | "number" | "unknown"
+	  	if 'type' == "unknown" - use 'raw' value, because  cell contain value with format '0.00';
+	  	$data->sheets[0]['cellsInfo'][$i][$j]['raw'] = value if cell without format
+	  	$data->sheets[0]['cellsInfo'][$i][$j]['colspan']
+	  	$data->sheets[0]['cellsInfo'][$i][$j]['rowspan']
+	  	*/
+	  	
+	  	error_reporting(E_ALL ^ E_NOTICE);
+	  	
+	  	for ($m = 1; $m <= $data->sheets[0]['numRows']; $m++) {
+	  		for ($j = 1; $j <= $data->sheets[0]['numCols']; $j++) {
+	  			echo "\"".$data->sheets[0]['cells'][$m][$j]."\",";
+	  		}
+	  		echo "\n";
+	  	
+	  	}
+	  	
+	  	
+	  	//print_r($data);
+	  	//print_r($data->formatRecords);
+	  }
+  }
+  header("location:advice_import.php");
+?>

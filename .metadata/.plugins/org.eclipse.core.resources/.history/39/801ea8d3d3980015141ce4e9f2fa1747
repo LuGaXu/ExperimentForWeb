@@ -1,0 +1,15 @@
+<?php
+		//"fromId="+did+"&toId="+currentFromId+"&mid="+mid+"&reply="+reply
+		include 'db.php';
+		$fromId=$_POST['fromId'];
+		$toId=$_POST['toId'];
+		$mid=$_POST['mid'];
+		$reply=$_POST['reply'];
+		
+		$sql="insert into reply (fromId,toId,mid,reply) values($fromId,$toId,$mid,'".$text."');";
+		// 		echo $sql;
+		$db->exec($sql);
+		$arr = array('message' =>"send success");
+		//$arr = array('message' =>$sql);
+		exit(json_encode($arr));
+?>

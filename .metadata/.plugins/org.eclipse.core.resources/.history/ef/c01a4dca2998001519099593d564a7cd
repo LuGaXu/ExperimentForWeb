@@ -1,0 +1,18 @@
+<?php
+	session_start();
+	$name=$_POST['name'];
+	$type=$_POST['type'];
+	$host=$_SESSION['name'];
+	$position=$_POST['position'];
+	include 'db.php';
+	if(!($type=='医生'||$type=='教练')){
+		$position=null;
+	}
+	$sql="update User set type='".$type."',position='".$position."' where name='".$name."';";
+	$db->exec($sql);
+	if($name==$host){
+		$_SESSION['type']=$type;
+	}
+	$arr = array('message' =>"update success");
+	exit(json_encode($arr));
+?>

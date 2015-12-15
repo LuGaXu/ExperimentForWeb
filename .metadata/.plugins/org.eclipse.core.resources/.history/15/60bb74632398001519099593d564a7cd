@@ -1,0 +1,9 @@
+<?php
+	$name=$_POST['name'];
+	$type=$_POST['type'];
+	include 'db.php';
+	$sql="update User set type='".$type."' where name='".$name."';";
+	$db->exec($sql);
+	$arr = array('message' =>"update success");
+	exit(json_encode($arr));
+?>

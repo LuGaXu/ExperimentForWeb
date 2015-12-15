@@ -1,0 +1,56 @@
+<?php
+
+class MyDB extends SQLite3 {
+    function MyDB() {
+        $this->open('../test.db');
+    }  
+}
+
+	$db = new MyDB();
+	if (!$db) {
+		echo "can not connect to the db";
+		exit();
+	}
+
+ //创建数据库
+/* $sql = <<< EOF
+      CREATE TABLE User (
+    name     VARCHAR (255, 0) PRIMARY KEY
+                              NOT NULL,
+    email    VARCHAR (255, 0) NOT NULL,
+    password VARCHAR (255)    NOT NULL,
+    type     VARCHAR (30)     NOT NULL
+);
+EOF;
+$ret = $db->exec($sql);
+if (!$ret) {
+    echo $db->lastErrorMsg();
+} else {
+    echo "Table created successfully!!!";
+} 
+
+/*插入数据*/
+/*  $sql = <<<EOF
+    insert into User(name,email,password,type)
+    values ("luga","3232","passwordsadsa","doctor");
+
+EOF;
+$db->exec($sql);  
+ */
+/*查询语句*/
+ /* $sql = <<<EOF
+select * from User;
+EOF;
+
+$ret = $db->query($sql);
+while ($row = $ret->fetchArray(SQLITE3_ASSOC)) {
+    echo "name = " . $row['name'] . " ";
+    echo "email = " . $row['email'] . " ";
+    echo "password = " . $row['password'] ." ";
+    echo "type =  " . $row['type'] . "\n";
+}
+echo "\nOperation done successfully~\n"; 
+ */
+// $db->close();
+
+

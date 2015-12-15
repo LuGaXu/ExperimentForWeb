@@ -1,0 +1,26 @@
+<?php
+	
+	$name=$_POST["name"];
+	$id=$_POST["id"];
+	$isIn=$_POST["isIn"];
+// 	$name="sharon";
+// 	$id="1";
+// 	$isIn=0;
+	include 'db.php';
+	if($isIn){
+		//exitActivity($name,$id);
+		$sql="delete from activity_member where name='".$name."' and aid=$id;";
+		$db->exec($sql);
+		$arr = array('message' =>"exit success");
+		// 		$arr = array('message' =>$sql);
+		exit(json_encode($arr));
+	}else{
+		//participate($name,$id);
+		$sql="insert into activity_member (name,aid)values('".$name."',".$id.");";
+		$db->exec($sql);
+		
+		$arr = array('message' =>"enter success");
+		//$arr = array('message' =>$sql);
+		exit(json_encode($arr));
+	}
+?>

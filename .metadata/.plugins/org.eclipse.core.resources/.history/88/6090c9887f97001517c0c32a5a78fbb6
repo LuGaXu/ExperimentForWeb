@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta HTTP-EQUIV="pragma" CONTENT="no-cache">
+<meta HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate">
+<meta HTTP-EQUIV="expires" CONTENT="Wed, 26 Feb 1997 08:21:57 GMT">
+<meta HTTP-EQUIV="expires" CONTENT="0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>快来运动</title>
+<link rel="shortcut icon" type="image/x-icon" href="../../View/picture/th.jpg" />
+<link href="../../bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="../../View/base.css" rel="stylesheet" type="text/css">
+<link href="../../View/setting.css" rel="stylesheet" type="text/css">
+<script src="../../bootstrap-3.3.5-dist/js/jquery-2.1.4.min.js">
+</script>
+<script src="../../bootstrap-3.3.5-dist/js/bootstrap.min.js">
+</script>
+<link href="../../View/login.css" rel="stylesheet" type="text/css">
+<script>
+   $(document).ready(function() {
+	   $("#tag1").hover(function(){
+		     $("#tag1").addClass("active");
+		 });
+	 $("#tag1").mouseleave(function(){
+		 	  $("#tag1").removeClass("active");
+		 });
+    $("#tag2").hover(function(){
+		     $("#tag2").addClass("active");
+		 });
+	 $("#tag2").mouseleave(function(){
+		 	  $("#tag2").removeClass("active");
+		 });
+	$("#tag3").hover(function(){
+		     $("#tag3").addClass("active");
+		 });
+	 $("#tag3").mouseleave(function(){
+		 	  $("#tag3").removeClass("active");
+		 });
+	$("#tag4").hover(function(){
+		     $("#tag4").addClass("active");
+		 });
+	 $("#tag4").mouseleave(function(){
+		 	  $("#tag4").removeClass("active");
+		 });
+});
+</script>
+
+</head>
+
+<body>
+
+	<!--head begin-->
+ 
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation" id="bar">
+     <div class="container">     
+   <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" 
+         data-target="#example-navbar-collapse">
+         <span class="sr-only">切换导航</span>
+         <span class="icon-bar"></span>
+         <span class="icon-bar"></span>
+         <span class="icon-bar"></span>
+      </button>    
+      <a class="navbar-brand" href="#">快来运动</a>
+   </div>
+   <div class="collapse navbar-collapse" id="example-navbar-collapse">
+      <ul class="nav navbar-nav navbar-right">
+         <li id="tag1"><a href="exercise.html"><strong>运动</strong></a></li>
+         <li id="tag2"><a href="../activity/activity.php"><strong>活动</strong></a></li>
+         <li id="tag3"><a href="advice.html"><strong>建议</strong></a></li>
+
+        
+         <li><a href="#"><span class="glyphicon glyphicon-envelope"></span></a></li>
+         <li id="tag5" class="dropdown active">  	
+            <a href="#"  class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-cog " ></span></a>        	
+            <ul class="dropdown-menu dropdown-menu-right " aria-labelledby="dLabel">
+               <li><a href="setting.php">个人设置</a></li>
+     
+               <li><a href="../../View/login.html">退出登录</a></li>             
+            </ul>
+         </li>         
+      </ul>
+  	 </div>
+   	</div>
+	</nav>
+	<!--head end-->
+    
+    <!--breadcrumb begin-->
+    <div class="breadcrumbs-container" id="bread">
+     <div class="container" >
+    <ol class="breadcrumb" style="background-color:#e0e0e0">
+  		<li><a href="home.html">Home</a></li>
+  		<li class="active">设置</li>
+	</ol>
+    </div>
+    </div>
+    <!--breadcrumg end-->
+    
+    
+     <div class="container">
+    	<div class="row" >
+    		<div class="col-md-4" style="height:300px;">
+             <!--nav-pill begin-->
+            <div id="pill">
+            	<ul class="nav nav-pills nav-stacked">
+    			<h3>个人设置</h3> 		
+  				<li role="presentation" class="active"><a href="setting.php">基本资料</a></li>
+        		<li role="presentation"><a href="setting_password.html">修改密码</a></li>
+  				<li role="presentation"><a href="setting_right.html">修改权限</a></li>
+			</ul>
+            </div>
+             <!--nav-pill end-->
+            </div>
+     		<div class="col-md-8" style="" id="content">
+            	<form class="form-horizontal" style="font-family:楷体,幼圆;font-size:1.5em;margin-top:100px;">
+                	 <div class="form-group">
+    					<label for="inputName" class="col-sm-2 control-label">昵称</label>
+    					<div class="col-sm-6">
+    						<?php 
+    							session_start();
+    							$name=$_SESSION['name'];
+    							$gender=$_SESSION['gender'];
+    							$email=$_SESSION['email'];
+					 			$type=$_SESSION['type'];
+					 			$birthmonth=$_SESSION['birthmonth'];
+					 			$birthday=$_SESSION['birthday'];
+					 			$location=$_SESSION['location'];
+					 			$interest=$_SESSION['interest'];
+					 			$motto=$_SESSION['motto'];
+    						?>
+      						<input type="text" class="form-control" id="inputName"  value='<?php echo $name?>' >
+   						</div>
+                        <div class="col-sm-4"></div>
+ 					 </div>
+                     <div class="form-group">
+                     	<label  class="col-sm-2 control-label">性别</label>         
+                     	<label class="radio-inline col-sm-2" style="margin-left:14px;">
+                          	<input type="radio" name="sexOptions" id="radio1" value="M"> 男
+                        </label>
+                        <label class="radio-inline col-sm-2">
+                          	<input type="radio" name="sexOptions" id="radio2" value="F"> 女
+                        </label>
+                        <div class="col-sm-6"></div>
+                     </div>
+                     <div class="form-group">
+                     	<label  class="col-sm-2 control-label">生日</label>
+                         <select class="form-control col-sm-2" name="month" id="monthId" onChange="updateDay()" style="width:70px;margin-left:10px;">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                    	</select>
+                        <label  class="col-sm-1">月</label>
+                    	<select class="form-control col-sm-2" name="day" id="dayId"  style="width:70px;">                      	
+                    	</select>
+                         <label  class="col-sm-1">日</label>
+                     </div>
+                     <div class="form-group">
+                     	<label  for="inputHome" class="col-sm-2 control-label">所在地</label>
+                        <div class="col-sm-6">
+      						<input type="text" class="form-control" id="inputHome"  value='<?php echo $_SESSION['location']?>' >
+   						</div>
+                        <div class="col-sm-4"></div>
+                        
+                     </div>
+                     <div class="form-group">
+                     	<label  for="inputInterest" class="col-sm-2 control-label">兴趣</label>
+                         <div class="col-sm-6">
+      						<input type="text" class="form-control" id="inputInterest" value='<?php echo $_SESSION['interest']?>' >
+   						</div>
+                        <div class="col-sm-4"></div>
+                     </div>
+                     <div class="form-group">
+                     	<label  class="col-sm-2 control-label">运动宣言</label>
+                        <textarea  rows="4" class="form-control col-sm-5" id="inputMotto" style="margin-left:15px;width:80%;"><?php echo $_SESSION['motto']?></textarea>
+                     </div>
+                     <button type="button" class="btn btn-primary col-sm-offset-2" id="save">保存</button>
+                </form>
+            </div>
+    	</div>
+ 	</div>
+    <script>
+    	$("#save").click(function(){
+			 var newname=$("#inputName").val();
+			 var newlocation=$("#inputHome").val();
+			 var newinterest=$("#inputInterest").val();
+			 var newmotto=$("#inputMotto").val();
+			 var newgender= $("input[name='sexOptions'][checked]").val();
+			 alert(newinterest);
+			 
+			 
+        })
+   		$(document).ready(function() {
+			var birthday=<?php echo $birthday?>;
+			var birthmonth=<?php echo $birthmonth?>;
+			var gender='<?php echo $gender?>';
+			if(gender=='M'){
+				$("#radio1").attr("checked",true);
+			}else{
+				$("#radio2").attr("checked",true);
+			}
+			$("select[name='month'] option[value='"+birthmonth+"']").attr("selected","selected");
+			updateDay();
+			$("select[name='day'] option[value='"+birthday+"']").attr("selected","selected");
+   	   	})
+		function updateDay(){
+			  var month=jQuery("#monthId").val();
+			  jQuery("#dayId").empty();
+			  var day;
+			  switch(month){
+			  case "1":
+				  day=31;
+				  break;
+			  case "2":
+				  day=29;
+				  break;
+			  case "3":
+				  day=31;
+				  break;	
+			  case "4":
+				  day=30;
+				  break;
+			  case "5":
+				  day=31;
+				  break;
+			  case "6":
+				  day=30;
+				  break;
+			  case "7":
+				  day=31;
+				  break;
+			  case "8":
+				  day=31;
+				  break;
+			  case "9":
+				  day=30;
+				  break;
+			  case "10":
+				  day=31;
+				  break;
+			  case "11":
+				  day=30;
+				  break;
+			  case "12":
+				  day=31;
+				  break;
+			  default:
+				  day=0;
+			 }
+		  
+			  for(var j=0;j<day;j++){
+				  jQuery("#dayId").append("<option value=\""+(j+1)+"\">"+(j+1)+"</option>")	
+			  }	
+		}
+    </script>   
+</body>
+</html>

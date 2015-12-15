@@ -1,0 +1,5 @@
+<?php
+	$id=$_POST['id'];
+	include 'db.php';
+	$sql="delete from importAdvice where id=$id";
+	

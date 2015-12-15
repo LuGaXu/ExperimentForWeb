@@ -1,0 +1,123 @@
+﻿<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>快来运动</title>
+<link rel="shortcut icon" type="image/x-icon" href="picture/th.jpg" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="../bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<script src="../bootstrap-3.3.5-dist/js/jquery-2.1.4.min.js">
+</script>
+<script src="../bootstrap-3.3.5-dist/js/bootstrap.min.js">
+</script>
+
+<link href="register.css" rel="stylesheet" type="text/css">
+</head>
+
+<body style="background-image:url(picture/background.jpg)">
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+   <div class="navbar-header" style="text-align:center">
+      <a class="navbar-brand" href="#"><strong >快来运动</strong></a>
+   </div>
+   </div>
+</nav>
+	<h1>注册账号</h1>
+	<div id="frame">
+            
+        	<div id="backgroundLayer"></div>
+        	<form class="form-horizontal" style="position:relative;color:#000000">
+                <div class="form-group">
+                	<label for="email" class="col-xs-3 control-label" style="text-align:center; font-family:Consolas, 'Andale Mono', 'Lucida Console', 'Lucida Sans Typewriter', Monaco, 'Courier New', monospace ;font-size:20px;position:relative;color:#000000">邮箱</label>
+                    <div class="col-xs-9">
+               			<input type="text" class="form-control" id="email" placeholder="邮箱" style="position:relative;color:#000000"/>
+                	</div>
+                </div>
+                
+            	<div class="form-group" style="padding-top:10px;">
+                	<label for="user" class="col-xs-3 control-label" style="text-align:center; font-family:Consolas, 'Andale Mono', 'Lucida Console', 'Lucida Sans Typewriter', Monaco, 'Courier New', monospace ;font-size:20px;position:relative;color:#000000">用户名</label>
+                    <div class="col-xs-9">
+               			<input type="text" class="form-control" id="user" placeholder="用户名" style="position:relative;color:#000000"/>
+                	</div>
+                </div>
+                
+                <div class="form-group" style="padding-top:10px;">
+                	<label for="password" class="col-xs-3 control-label" style="text-align:center;font-family:Consolas, 'Andale Mono', 'Lucida Console', 'Lucida Sans Typewriter', Monaco, 'Courier New', monospace;font-size:20px;vertical-align:middle">密码</label>
+                    <div class="col-xs-9">
+               			<input type="password" class="form-control" id="password" placeholder="密码"/>
+                	</div>
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-offset-3 col-xs-9">			
+                        
+                        <a href="login.html">&nbsp;&nbsp;&nbsp;已有账号？立即登录</a>
+                	</div>
+                </div>
+                <div class="form-group">
+                	 <div class="col-xs-offset-3 col-xs-9">
+               			<input type="button"  style="width:200px;margin-top:10px" class="btn btn-primary" id="register" value="立即注册"/>
+                	</div>
+                </div>
+            </form>
+        </div>
+      
+</body>
+<script>
+var xmlHttp=null;
+function GetXmlHttpObject(){
+	xmlHttp=null;
+	try{
+ 	// Firefox, Opera 8.0+, Safari
+ 		xmlHttp=new XMLHttpRequest();
+ 	}catch (e){
+    // Internet Explorer
+    	try{
+  			xmlHttp=new ActiveXObject("Msxml2.XMLHTTP");
+  		}catch (e){
+  			xmlHttp=new ActiveXObject("Microsoft.XMLHTTP");
+  		}
+ 	}
+	return xmlHttp;
+}
+function sign_up_callback(){
+	if (xmlHttp.readyState==4 || xmlHttp.readyState=="complete") {
+		
+		if (xmlHttp.status == 200) {
+			var data=xmlHttp.responseText;
+			alert(data);
+		  	if(data=="存在相同的用户名！"){
+				   // alert("用户名已存在！");			
+					window.location.href="register.html";		
+				}else if(data=="注册成功！"){
+					window.location.href="login.html";
+				}else{
+				    alert("注册失败！");
+					window.location.href="register.html";
+				}
+	}
+	}
+}
+
+
+$("#register").click(function(){
+	var name1=$("#user").val();
+	var password1=$("#password").val();
+	var email1=$("#email").val();
+	//alert(name1);
+	
+	var xmlHttp=GetXmlHttpObject();
+
+	if (xmlHttp==null){
+ 		alert ("Browser does not support HTTP Request")
+ 		return
+ 	}
+ 	xmlHttp.onreadystatechange = sign_up_callback;
+	xmlHttp.open("POST", "../php/register.php", false);
+	xmlHttp.setRequestHeader("Content-Type",
+			"application/x-www-form-urlencoded");
+	xmlHttp.send("email=" + email1+"&name="+name1+"&password="+password1);
+
+});
+
+</script>
+</html>
